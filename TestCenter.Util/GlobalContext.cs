@@ -7,8 +7,6 @@ using System;
 using System.Reflection;
 using System.Text;
 using TestCenter.Util.Model;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.FileProviders;
 
 namespace TestCenter.Util
 {
@@ -61,17 +59,17 @@ namespace TestCenter.Util
             context.Context.Response.Headers.Add("Expires", new[] { DateTime.UtcNow.AddYears(1).ToString("R") }); // Format RFC1123
         }
     }
-    public interface IWebHostEnvironment : IHostEnvironment
-    {
-        //
-        // 摘要:
-        //     Gets or sets an Microsoft.Extensions.FileProviders.IFileProvider pointing at
-        //     Microsoft.AspNetCore.Hosting.IWebHostEnvironment.WebRootPath.
-        IFileProvider WebRootFileProvider { get; set; }
-        //
-        // 摘要:
-        //     Gets or sets the absolute path to the directory that contains the web-servable
-        //     application content files.
-        string WebRootPath { get; set; }
-    }
+    //public interface IWebHostEnvironment : IHostEnvironment
+    //{
+    //    //
+    //    // 摘要:
+    //    //     Gets or sets an Microsoft.Extensions.FileProviders.IFileProvider pointing at
+    //    //     Microsoft.AspNetCore.Hosting.IWebHostEnvironment.WebRootPath.
+    //    IFileProvider WebRootFileProvider { get; set; }
+    //    //
+    //    // 摘要:
+    //    //     Gets or sets the absolute path to the directory that contains the web-servable
+    //    //     application content files.
+    //    string WebRootPath { get; set; }
+    //}
 }
