@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestCenter.Business.Cache\TestCenter.Business.Cache.csproj" />
+    <ProjectReference Include="..\TestCenter.Entity\TestCenter.Entity.csproj" />
+    <ProjectReference Include="..\TestCenter.Util\TestCenter.Util.csproj" />
+  </ItemGroup>
+
+</Project>

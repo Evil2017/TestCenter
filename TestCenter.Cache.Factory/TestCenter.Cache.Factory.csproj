@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestCenter.Cache.Interface\TestCenter.Cache.Interface.csproj" />
+    <ProjectReference Include="..\TestCenter.MemoryCache\TestCenter.MemoryCache.csproj" />
+    <ProjectReference Include="..\TestCenter.RedisCache\TestCenter.RedisCache.csproj" />
+    <ProjectReference Include="..\TestCenter.Util\TestCenter.Util.csproj" />
+  </ItemGroup>
+
+</Project>
