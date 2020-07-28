@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestCenter.Business.SystemManage;
-using TestCenter.Entity.SystemManage;
-using TestCenter.Enum;
-using TestCenter.Util;
 using TestCenter.Util.Extension;
 using TestCenter.Util.Model;
+using TestCenter.Util;
+using System.Diagnostics;
+using TestCenter.Entity.SystemManage;
+using System.Reflection;
+using System.Text;
 using TestCenter.Web.Code;
+using TestCenter.Business.SystemManage;
+using TestCenter.Enum;
 
 namespace TestCenter.Admin.Web.Controllers
 {

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Data;
+using Microsoft.AspNetCore.Mvc;
 using TestCenter.Admin.Web.Controllers;
 using TestCenter.Business.SystemManage;
 using TestCenter.CodeGenerator.Model;
@@ -15,6 +15,7 @@ using TestCenter.Model.Result.SystemManage;
 using TestCenter.Util;
 using TestCenter.Util.Model;
 using TestCenter.Web.Code;
+using TestCenter.CodeGenerator;
 
 namespace TestCenter.Admin.Web.Areas.ToolManage.Controllers
 {
@@ -70,7 +71,7 @@ namespace TestCenter.Admin.Web.Areas.ToolManage.Controllers
             if (obj.Data != null)
             {
                 // 基础字段不显示出来
-                obj.Data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.name));
+                obj.Data.RemoveAll(p => BaseField.BaseFieldList.Contains(p.name));                
             }
             return Json(obj);
         }

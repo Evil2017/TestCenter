@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCenter.Mvc", "TestCenter.Mvc\TestCenter.Mvc.csproj", "{DFE3A197-4631-4B02-AD90-E65E7C45101C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "基础设施", "基础设施", "{0CE9818A-4304-41E6-9D34-2945A7359846}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "数据缓存接口", "数据缓存接口", "{B3A6857C-C336-40ED-99E7-EC9D55B14C41}"
@@ -53,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCenter.Business.Cache",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCenter.Business.AutoJob", "TestCenter.Business.AutoJob\TestCenter.Business.AutoJob.csproj", "{BAC0BE78-4A8D-4CD4-A489-D1F103C21F98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCenter.Api", "TestCenter.Api\TestCenter.Api.csproj", "{7F352560-6E49-4290-AF69-C2450DD21B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCenter.Api", "TestCenter.Api\TestCenter.Api.csproj", "{7F352560-6E49-4290-AF69-C2450DD21B96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCenter.Mvc", "TestCenter.Mvc\TestCenter.Mvc.csproj", "{5397ED3E-DECF-4F4D-9B0C-7569DF6EED65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +61,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DFE3A197-4631-4B02-AD90-E65E7C45101C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFE3A197-4631-4B02-AD90-E65E7C45101C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFE3A197-4631-4B02-AD90-E65E7C45101C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFE3A197-4631-4B02-AD90-E65E7C45101C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4EBD4982-5460-48B7-8DDE-064F49A70DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4EBD4982-5460-48B7-8DDE-064F49A70DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EBD4982-5460-48B7-8DDE-064F49A70DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -141,12 +137,15 @@ Global
 		{7F352560-6E49-4290-AF69-C2450DD21B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F352560-6E49-4290-AF69-C2450DD21B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F352560-6E49-4290-AF69-C2450DD21B96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5397ED3E-DECF-4F4D-9B0C-7569DF6EED65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5397ED3E-DECF-4F4D-9B0C-7569DF6EED65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5397ED3E-DECF-4F4D-9B0C-7569DF6EED65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5397ED3E-DECF-4F4D-9B0C-7569DF6EED65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DFE3A197-4631-4B02-AD90-E65E7C45101C} = {FA8DA35F-B719-4C5D-9C8D-6183A5E4C8FD}
 		{B3A6857C-C336-40ED-99E7-EC9D55B14C41} = {0CE9818A-4304-41E6-9D34-2945A7359846}
 		{4EBD4982-5460-48B7-8DDE-064F49A70DC0} = {0CE9818A-4304-41E6-9D34-2945A7359846}
 		{8ACAA0CC-36D4-483C-98A3-700E42572607} = {0CE9818A-4304-41E6-9D34-2945A7359846}
@@ -167,6 +166,7 @@ Global
 		{6211E37C-50BF-4D05-8FD3-C744EC09272F} = {60CAB243-E138-4566-B336-CDD39C11425B}
 		{BAC0BE78-4A8D-4CD4-A489-D1F103C21F98} = {60CAB243-E138-4566-B336-CDD39C11425B}
 		{7F352560-6E49-4290-AF69-C2450DD21B96} = {FA8DA35F-B719-4C5D-9C8D-6183A5E4C8FD}
+		{5397ED3E-DECF-4F4D-9B0C-7569DF6EED65} = {FA8DA35F-B719-4C5D-9C8D-6183A5E4C8FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6D24145-8211-4630-A5E6-7FF31FABFC5C}
