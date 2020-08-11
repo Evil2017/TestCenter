@@ -1,25 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+ï»¿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using System.IO;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using TestCenter.Admin.Web.Controllers;
 using TestCenter.Util;
 using TestCenter.Util.Model;
 
-namespace TestCenter.Mvc
+namespace TestCenter.Admin.Web
 {
     public class Startup
     {
@@ -55,7 +50,7 @@ namespace TestCenter.Mvc
                 options.ModelMetadataDetailsProviders.Add(new ModelBindingMetadataProvider());
             }).AddNewtonsoftJson(options =>
             {
-                // ·µ»ØÊı¾İÊ××ÖÄ¸²»Ğ¡Ğ´£¬CamelCasePropertyNamesContractResolverÊÇĞ¡Ğ´
+                // è¿”å›æ•°æ®é¦–å­—æ¯ä¸å°å†™ï¼ŒCamelCasePropertyNamesContractResolveræ˜¯å°å†™
                 options.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
 
@@ -76,7 +71,7 @@ namespace TestCenter.Mvc
         {
             if (!string.IsNullOrEmpty(GlobalContext.SystemConfig.VirtualDirectory))
             {
-                app.UsePathBase(new PathString(GlobalContext.SystemConfig.VirtualDirectory)); // ÈÃ Pathbase ÖĞ¼ä¼ş³ÉÎªµÚÒ»¸ö´¦ÀíÇëÇóµÄÖĞ¼ä¼ş£¬ ²ÅÄÜÕıÈ·µÄÄ£ÄâĞéÄâÂ·¾¶
+                app.UsePathBase(new PathString(GlobalContext.SystemConfig.VirtualDirectory)); // è®© Pathbase ä¸­é—´ä»¶æˆä¸ºç¬¬ä¸€ä¸ªå¤„ç†è¯·æ±‚çš„ä¸­é—´ä»¶ï¼Œ æ‰èƒ½æ­£ç¡®çš„æ¨¡æ‹Ÿè™šæ‹Ÿè·¯å¾„
             }
             if (WebHostEnvironment.IsDevelopment())
             {

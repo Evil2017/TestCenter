@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Web;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using TestCenter.Admin.Web.Controllers;
-using TestCenter.Model.Result.SystemManage;
 using TestCenter.Util;
 using TestCenter.Util.Model;
 

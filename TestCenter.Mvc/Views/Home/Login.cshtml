@@ -1,17 +1,21 @@
-﻿
-@{
-    ViewData["Title"] = "Login";
+﻿@{
+    ViewBag.Title = "一沙后台管理系统 - 登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment
-
-<h1>Login</h1>
-
+@section header{
+    <link href='@Url.Content("~/yisha/css/login.css")' rel="stylesheet" />
+    <script>
+        if (window.top !== window.self) { window.top.location = window.location };
+    </script>
+    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/lib/jquery.validation/1.14.0/jquery.validate.min.js"))
+}
 <div class="login-panel">
     <div class="row section">
         <div class="col-sm-12">
             <form id="form">
                 <h4 class="no-margin">登录：</h4>
-                <p class="m-t-md"></p>
+                <p class="m-t-md">一沙一世界，一叶一菩提</p>
                 <p>用户名：admin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码：123456</p>
                 <input id="userName" name="userName" class="form-control uname" col="UserName" type="text" placeholder="用户名" value="@ViewBag.UserName" />
                 <input id="password" name="password" class="form-control pword m-b" col="Password" type="password" placeholder="密码" value="@ViewBag.Password" />
@@ -34,13 +38,11 @@
     </div>
     <div class="login-footer">
         <div style="text-align:center">
+            &copy; 2018-@DateTime.Now.Year <a href="https://www.yishasoft.com" target="_blank" style="color:white">yishasoft.com</a> All Rights Reserved.<br>
+            <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow">皖ICP备18018970号-1</a><br>
         </div>
     </div>
 </div>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/jquery.cookie/jquery.cookie.js"></script>
-<script src="~/yisha/js/yisha.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script type="text/javascript">
     $(function () {
         if ($.cookie('RememberMe') == 1) {
@@ -80,23 +82,22 @@
 
     function loginForm() {
         if ($("#form").validate().form()) {
-            var postData = { "userName": $("#userName").val(), password: $("#password").val(), captchaCode: $("#captchaCode").val()};
-          
-          $.ajax({
-                url: '/Home/LoginJson',
+            var postData = {userName:$('#userName').val(),password:$('')};
+            alert(postData);
+            $.ajax({
+                url: '@Url.Content("~/Home/LoginJson")',
                 type: "post",
                 data: postData,
-              success: function (obj) {
-                  console.log(obj);
-                    if (obj.Tag == 1) {                       
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        ys.msgSuccess(obj.Message);
                         redirectToIndex();
                     }
                     else {
-                        
+                        ys.msgError(obj.Message);
                     }
                 }
             });
-
         }
     }
 

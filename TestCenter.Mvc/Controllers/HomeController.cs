@@ -1,22 +1,20 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using TestCenter.Business.OrganizationManage;
 using TestCenter.Business.SystemManage;
+using TestCenter.Entity.OrganizationManage;
 using TestCenter.Entity.SystemManage;
 using TestCenter.Enum;
-using TestCenter.IdGenerator;
 using TestCenter.Model.Result;
-using TestCenter.Util.Extension;
-using TestCenter.Web.Code;
-using TestCenter.Util.Model;
 using TestCenter.Util;
-using TestCenter.Entity.OrganizationManage;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+using TestCenter.Util.Extension;
+using TestCenter.Util.Model;
+using TestCenter.Web.Code;
 
 namespace TestCenter.Admin.Web.Controllers
 {
