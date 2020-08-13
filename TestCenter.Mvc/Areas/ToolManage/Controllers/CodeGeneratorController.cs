@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using System.Web;
 using TestCenter.Admin.Web.Controllers;
 using TestCenter.Business.SystemManage;
-using TestCenter.CodeGenerator.Model;
-using TestCenter.CodeGenerator.Template;
 using TestCenter.Entity;
 using TestCenter.Model.Result;
 using TestCenter.Model.Result.SystemManage;

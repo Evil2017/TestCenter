@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "一沙后台管理系统 - 登录";
+    ViewBag.Title = "血浆检测中心 - 登录";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment
@@ -15,7 +15,7 @@
         <div class="col-sm-12">
             <form id="form">
                 <h4 class="no-margin">登录：</h4>
-                <p class="m-t-md">一沙一世界，一叶一菩提</p>
+                <p class="m-t-md">单 采 血 浆 检 测 中 心</p>
                 <p>用户名：admin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码：123456</p>
                 <input id="userName" name="userName" class="form-control uname" col="UserName" type="text" placeholder="用户名" value="@ViewBag.UserName" />
                 <input id="password" name="password" class="form-control pword m-b" col="Password" type="password" placeholder="密码" value="@ViewBag.Password" />
@@ -38,8 +38,8 @@
     </div>
     <div class="login-footer">
         <div style="text-align:center">
-            &copy; 2018-@DateTime.Now.Year <a href="https://www.yishasoft.com" target="_blank" style="color:white">yishasoft.com</a> All Rights Reserved.<br>
-            <a href="http://www.beian.miit.gov.cn/" target="_blank" rel="nofollow">皖ICP备18018970号-1</a><br>
+            &copy; 2018-@DateTime.Now.Year <a href="https://www.yishasoft.com" target="_blank" style="color:white">oa.vlink.com</a> All Rights Reserved.<br>
+            <a href="http://www.oa.vlink.com/" target="_blank" rel="nofollow">桂ICP备18018970号-1</a><br>
         </div>
     </div>
 </div>
@@ -48,7 +48,8 @@
         if ($.cookie('RememberMe') == 1) {
             $("#rememberMe").prop("checked", true);
             if ("@GlobalContext.SystemConfig.LoginProvider" == "Cookie") {
-                if (!ys.isNullOrEmpty($.cookie('UserToken'))) {
+                var cookie = $.cookie('UserToken');
+                if (cookie != null && cookie != undefined && cookie!='') {
                     redirectToIndex();
                 }
             }
@@ -82,19 +83,20 @@
 
     function loginForm() {
         if ($("#form").validate().form()) {
-            var postData = {userName:$('#userName').val(),password:$('')};
-            alert(postData);
+            var postData = { userName: $('#userName').val(), password: $('#password').val(), captchaCode:$("#captchaCode").val()};
+            console.log(postData);
             $.ajax({
-                url: '@Url.Content("~/Home/LoginJson")',
+                dataType:"json",
+                url: '/Home/LoginJson',
                 type: "post",
                 data: postData,
                 success: function (obj) {
+                    console.log(obj);
                     if (obj.Tag == 1) {
-                        ys.msgSuccess(obj.Message);
                         redirectToIndex();
                     }
                     else {
-                        ys.msgError(obj.Message);
+                        console.log(obj.Message);
                     }
                 }
             });
@@ -102,6 +104,6 @@
     }
 
     function redirectToIndex() {
-        location.href = '@Url.Content("~/Home/Index")';
+        location.href = '/Home/Index';
     }
 </script>

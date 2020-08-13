@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\ToolManage\Controllers\CodeGeneratorController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="Areas\DemoManage\Views\Form\AutoComplete.cshtml" />
     <None Include="Areas\DemoManage\Views\Form\Button.cshtml" />
     <None Include="Areas\DemoManage\Views\Form\Card.cshtml" />
@@ -497,7 +501,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestCenter.Business\TestCenter.Business.csproj" />
-    <ProjectReference Include="..\TestCenter.CodeGenerator\TestCenter.CodeGenerator.csproj" />
     <ProjectReference Include="..\TestCenter.Entity\TestCenter.Entity.csproj" />
     <ProjectReference Include="..\TestCenter.Util\TestCenter.Util.csproj" />
   </ItemGroup>

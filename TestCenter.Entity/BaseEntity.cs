@@ -30,7 +30,7 @@ namespace TestCenter.Entity
 
         public virtual void Create()
         {
-            this.Id = IdGeneratorHelper.Instance.GetId();
+            this.Id =  IdGeneratorHelper.Instance.GetId();
         }
     }
 
