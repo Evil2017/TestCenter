@@ -1,0 +1,831 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv=“Content-Security-Policy” content=“upgrade-insecure-requests” />
+    <meta name="renderer" content="webkit">
+    <title></title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
+    <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
+    <meta name="x5-page-mode" content="app"><!-- QQ应用模式 -->
+    <link rel="stylesheet" type="text/css" href="/content/easyui/themes/material/easyui.css?1144">
+    <link rel="stylesheet" type="text/css" href="/content/easyui/themes/icon.css">
+
+    <link rel="stylesheet" type="text/css" href="/content/css/cjb.css">
+    <link rel="stylesheet" href="/content/css/font-awesome.min.css">
+    <script type="text/javascript" src="/content/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/content/easyui/jquery.easyui.min.js?1234555"></script>
+    <script type="text/javascript" src="/content/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="/content/css/skin-blue3.css">
+    <script src="/content/easyui/keyCtr.js"></script>
+    <script src="/content/layer/layer.js"></script>
+    <script src="/content/js/vilnkpublic.js"></script>
+    <script src="/content/vue.js"></script>
+    <style type="text/css">
+    </style>
+    <script>
+
+        var accobj0017 = 0;
+        //打印方法
+        function Vilnkprint(refs) {
+            var n = '';
+            if (n == '1') {
+                var msg = '[VL_Client_Print]' + refs;
+                alert(msg);
+            } else {
+                successmsg("请用客户端打开");
+            }
+        }
+        $(function () {
+
+            setTimeout(function () { fEnterFnSeach('listseach') }, 1000)
+
+        });
+
+        // ajax全局异常处理
+        $(document).ajaxError(function (event, xhr, options, info) {
+            layer.closeAll('dialog'); layer.closeAll('tips'); layer.closeAll('loading');
+            switch (xhr.status) {
+                case (500):
+                    accobj0017 = 0;
+                    errmsg("服务器系统内部错误,请联系管理员");
+                    break;
+                case (404): accobj0017 = 0;
+                    errmsg("找不到请求路径,请联系管理员！");
+                    break;
+                case (401): accobj0017 = 0;
+                    errmsg("未登录");
+                    break;
+                case (403): accobj0017 = 0;
+                    errmsg("无权限执行此操作");
+                    break;
+                case (408): accobj0017 = 0;
+                    errmsg("请求超时");
+                    break;
+                case (200):
+                    if (xhr.responseText == "console.log(-192706)") {
+                        alert('请先重新登录！');
+                        window.top.location = '/Login';
+                    }
+                    break;
+                default:
+                // console.log(xhr);
+                // errmsg('系统出现异常，操作失败，请联系管理员少时诵诗书所所所所所！· ');
+            }
+            accobj0017 = 0;
+        });
+
+        var flag = true;
+        $.extend($.fn.validatebox.defaults.rules, {
+            validate: {
+                validator: function (value, param) {
+                    $.post(param, { str: value }, function (data) {
+                        var msg = JSON.parse(data);
+                        if (msg.status > 0) {
+                            message: "";
+                            flag = true;
+                            $.data(document.body, "flag", flag);
+                        } else {
+                            errmsg("批号不存在，请从新输入！");
+                            flag = false;
+                            $.data(document.body, "flag", flag);
+                        }
+                    });
+                    return $.data(document.body, "flag");
+                },
+                message: ''
+            },
+            message: ""
+        }
+        );
+
+    </script>
+    <style type="text/css">
+        .dm-dqwz {
+            background-color: #fff !important;
+            border-bottom: 1px solid #ddd !important;
+            height: 34px !important;
+            line-height: 34px !important;
+            padding-left: 10px;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            z-index: 9;
+        }
+
+            .dm-dqwz a {
+                color: #0FA0D5;
+            }
+
+        .layout-panel-center {
+            margin-top: 5px;
+        }
+
+        .layout-panel-west {
+            margin-top: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .panel-title.panel-with-icon, .panel-header.panel-header-noborder.window-header {
+            height: 31px !important;
+            line-height: 31px !important;
+            font-size: 14px !important;
+        }
+    </style>
+</head>
+
+
+
+<body class="easyui-layout" id="layoutbody">
+    <script src="/content/easyui/menu.js?v=577"></script>
+    <script type="text/javascript">
+        var menobj =
+            [{ "id": "1", "text": "检测管理", "checked": false, "_parentId": "0", "iconCls": "", "attributes": { "ID": 1, "Menu": "检测管理", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 0 }, "children": [{ "id": "6", "text": "日常业务", "checked": false, "_parentId": "1", "iconCls": "", "attributes": { "ID": 6, "Menu": "日常业务", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 1 }, "children": [{ "id": "10", "text": "标本接收", "checked": false, "_parentId": "6", "iconCls": "", "attributes": { "ID": 10, "Menu": "标本接收", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 6 }, "children": [] }, { "id": "11", "text": "酶标板管理", "checked": false, "_parentId": "6", "iconCls": "", "attributes": { "ID": 11, "Menu": "酶标板管理", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 6 }, "children": [] }, { "id": "12", "text": "检验结果审核", "checked": false, "_parentId": "6", "iconCls": "", "attributes": { "ID": 12, "Menu": "检验结果审核", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 6 }, "children": [] }, { "id": "13", "text": "待检测标本", "checked": false, "_parentId": "6", "iconCls": "", "attributes": { "ID": 13, "Menu": "待检测标本", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 6 }, "children": [] }] }, { "id": "7", "text": "记录", "checked": false, "_parentId": "1", "iconCls": "", "attributes": { "ID": 7, "Menu": "记录", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 1 }, "children": [{ "id": "14", "text": "检验日报", "checked": false, "_parentId": "7", "iconCls": "", "attributes": { "ID": 14, "Menu": "检验日报", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 7 }, "children": [] }, { "id": "15", "text": "检验月报", "checked": false, "_parentId": "7", "iconCls": "", "attributes": { "ID": 15, "Menu": "检验月报", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 7 }, "children": [] }] }, { "id": "8", "text": "报表", "checked": false, "_parentId": "1", "iconCls": "", "attributes": { "ID": 8, "Menu": "报表", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 1 }, "children": [{ "id": "16", "text": "即刻法质控", "checked": false, "_parentId": "8", "iconCls": "", "attributes": { "ID": 16, "Menu": "即刻法质控", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 8 }, "children": [] }] }, { "id": "9", "text": "室内质控", "checked": false, "_parentId": "1", "iconCls": "", "attributes": { "ID": 9, "Menu": "室内质控", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 1 }, "children": [] }] }, { "id": "2", "text": "试剂管理", "checked": false, "_parentId": "0", "iconCls": "", "attributes": { "ID": 2, "Menu": "试剂管理", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 0 }, "children": [{ "id": "17", "text": "日常业务", "checked": false, "_parentId": "2", "iconCls": "", "attributes": { "ID": 17, "Menu": "日常业务", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 2 }, "children": [{ "id": "21", "text": "试剂入库", "checked": false, "_parentId": "17", "iconCls": "", "attributes": { "ID": 21, "Menu": "试剂入库", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 17 }, "children": [] }, { "id": "22", "text": "试剂出库", "checked": false, "_parentId": "17", "iconCls": "", "attributes": { "ID": 22, "Menu": "试剂出库", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 17 }, "children": [] }, { "id": "23", "text": "试剂盘点", "checked": false, "_parentId": "17", "iconCls": "", "attributes": { "ID": 23, "Menu": "试剂盘点", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 17 }, "children": [] }, { "id": "24", "text": "试剂审核", "checked": false, "_parentId": "17", "iconCls": "", "attributes": { "ID": 24, "Menu": "试剂审核", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 17 }, "children": [] }] }, { "id": "18", "text": "记录", "checked": false, "_parentId": "2", "iconCls": "", "attributes": { "ID": 18, "Menu": "记录", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 2 }, "children": [{ "id": "25", "text": "入库记录", "checked": false, "_parentId": "18", "iconCls": "", "attributes": { "ID": 25, "Menu": "入库记录", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 18 }, "children": [] }, { "id": "26", "text": "出库记录", "checked": false, "_parentId": "18", "iconCls": "", "attributes": { "ID": 26, "Menu": "出库记录", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 18 }, "children": [] }, { "id": "27", "text": "盘点记录", "checked": false, "_parentId": "18", "iconCls": "", "attributes": { "ID": 27, "Menu": "盘点记录", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 18 }, "children": [] }] }, { "id": "19", "text": "报表", "checked": false, "_parentId": "2", "iconCls": "", "attributes": { "ID": 19, "Menu": "报表", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 2 }, "children": [{ "id": "28", "text": "试剂使用日报", "checked": false, "_parentId": "19", "iconCls": "", "attributes": { "ID": 28, "Menu": "试剂使用日报", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 19 }, "children": [] }, { "id": "29", "text": "试剂使用月报", "checked": false, "_parentId": "19", "iconCls": "", "attributes": { "ID": 29, "Menu": "试剂使用月报", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 19 }, "children": [] }] }, { "id": "20", "text": "基础设置", "checked": false, "_parentId": "2", "iconCls": "", "attributes": { "ID": 20, "Menu": "基础设置", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 2 }, "children": [{ "id": "30", "text": "试剂名称", "checked": false, "_parentId": "20", "iconCls": "", "attributes": { "ID": 30, "Menu": "试剂名称", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 20 }, "children": [] }, { "id": "31", "text": "试剂厂家", "checked": false, "_parentId": "20", "iconCls": "", "attributes": { "ID": 31, "Menu": "试剂厂家", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 20 }, "children": [] }, { "id": "32", "text": "供应商", "checked": false, "_parentId": "20", "iconCls": "", "attributes": { "ID": 32, "Menu": "供应商", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 20 }, "children": [] }] }] }, { "id": "3", "text": "临时库", "checked": false, "_parentId": "0", "iconCls": "", "attributes": { "ID": 3, "Menu": "临时库", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 0 }, "children": [{ "id": "33", "text": "日常业务", "checked": false, "_parentId": "3", "iconCls": "", "attributes": { "ID": 33, "Menu": "日常业务", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 3 }, "children": [{ "id": "36", "text": "入库接收", "checked": false, "_parentId": "33", "iconCls": "", "attributes": { "ID": 36, "Menu": "入库接收", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 33 }, "children": [] }, { "id": "37", "text": "出库审核", "checked": false, "_parentId": "33", "iconCls": "", "attributes": { "ID": 37, "Menu": "出库审核", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 33 }, "children": [] }] }, { "id": "34", "text": "记录", "checked": false, "_parentId": "3", "iconCls": "", "attributes": { "ID": 34, "Menu": "记录", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 3 }, "children": [{ "id": "38", "text": "入库记录", "checked": false, "_parentId": "34", "iconCls": "", "attributes": { "ID": 38, "Menu": "入库记录", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 34 }, "children": [] }, { "id": "39", "text": "出库记录", "checked": false, "_parentId": "34", "iconCls": "", "attributes": { "ID": 39, "Menu": "出库记录", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 34 }, "children": [] }] }, { "id": "35", "text": "报表", "checked": false, "_parentId": "3", "iconCls": "", "attributes": { "ID": 35, "Menu": "报表", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 3 }, "children": [{ "id": "40", "text": "库存状态", "checked": false, "_parentId": "35", "iconCls": "", "attributes": { "ID": 40, "Menu": "库存状态", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 35 }, "children": [] }] }] }, { "id": "4", "text": "质量管理", "checked": false, "_parentId": "0", "iconCls": "", "attributes": { "ID": 4, "Menu": "质量管理", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 0 }, "children": [{ "id": "41", "text": "审计追踪", "checked": false, "_parentId": "4", "iconCls": "", "attributes": { "ID": 41, "Menu": "审计追踪", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 4 }, "children": [] }, { "id": "42", "text": "通讯日志", "checked": false, "_parentId": "4", "iconCls": "", "attributes": { "ID": 42, "Menu": "通讯日志", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 4 }, "children": [] }] }, { "id": "5", "text": "系统设置", "checked": false, "_parentId": "0", "iconCls": "", "attributes": { "ID": 5, "Menu": "系统设置", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 0 }, "children": [{ "id": "43", "text": "组织架构", "checked": false, "_parentId": "5", "iconCls": "", "attributes": { "ID": 43, "Menu": "组织架构", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 5 }, "children": [] }, { "id": "44", "text": "角色管理", "checked": false, "_parentId": "5", "iconCls": "", "attributes": { "ID": 44, "Menu": "角色管理", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 5 }, "children": [] }, { "id": "45", "text": "冷库设置", "checked": false, "_parentId": "5", "iconCls": "", "attributes": { "ID": 45, "Menu": "冷库设置", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 5 }, "children": [] }, { "id": "46", "text": "浆站设置", "checked": false, "_parentId": "5", "iconCls": "", "attributes": { "ID": 46, "Menu": "浆站设置", "URL": null, "ICON": null, "width": null, "height": null, "OpenType": null, "parentid": 5 }, "children": [] }] }];
+        var query = 0;
+        var result = [];
+        var demo = null;
+        $(function () {
+            // $('#layoutbody').layout('hidden', 'west');
+
+
+        })
+
+        window.onerror = handleError
+        function handleError(msg, url, l) {
+            var txt = "页面执行错误.\n\n"
+            txt += "错误内容: " + msg + "\n"
+            txt += "URL: " + url + "\n"
+            txt += "行数: " + l + "\n\n"
+            errmsg(txt)
+            return true
+        }
+
+        function setmenut() {
+            $("#headmenu li:first").addClass("active");
+            demo.treeData = menobj[0].children;
+            $("#headmenu li").unbind();
+            $("#headmenu li").click(function () {
+                $(this).addClass('active')
+                $(this).siblings().removeClass('active');
+                var i = $(this).index();
+
+                if (menobj[i].children.length > 0) {
+                    demo.treeData = menobj[i].children;
+                    var obj0 = menobj[i].children[0];
+                    var fl = true;
+                    while (fl) {
+                        if (obj0.children.length > 0) {
+                            obj0 = obj0.children[0];
+                        } else {
+                            obj0 = obj0;
+                            fl = false;
+                        }
+                    }
+                    if (obj0.attributes.URL == '#' || obj0.attributes.URL == '' || obj0.attributes.URL == null) {
+                        successmsg("正在开发。。。");
+                    } else {
+                        addTab(obj0.text, obj0.attributes.URL);
+                    }
+                    $('#layoutbody').layout('show', 'west');
+                    return;
+                } else {
+
+                    if (menobj[i].attributes.URL == '#' || menobj[i].attributes.URL == '' || menobj[i].attributes.URL == null) {
+                        successmsg("正在开发。。。");
+                    } else {
+                        addTab(menobj[i].text, menobj[i].attributes.URL);
+
+                        $('#layoutbody').layout('hidden', 'west');
+                        return;
+                    }
+                }
+
+            });
+        }
+        var loadindex = -1;
+        var loadindex = -1;
+        $(function () {
+
+            //var iframe = $("#contentIfr");
+            //var  height=iframe.parent().height();
+            //iframe.height(height);
+
+            //var iframe11 = document.getElementById("contentIfr");
+            //iframe11.onload = function () {
+            //    layer.close(loadindex);
+            //};
+
+        })
+        //客户端操作后回调
+        function CallBack(DataStr) {
+            exiffun("CallBack", DataStr);
+            // alert(DataStr);
+        }
+        // 动态调用子页面方法
+        function changeTabsTitle(tt) {
+            $("#tabs .tabs-selected .tabs-title").text(tt);
+        }
+    </script>
+    <style>
+        .layui-layer-loading .layui-layer-content {
+            width: 367px;
+            height: 64px;
+            background: none !important;
+        }
+
+        .layout-panel-west {
+            left: 0px !important;
+        }
+    </style>
+    <style type="text/css">
+        body, html {
+            height: 100%;
+            background: #F2F2F2;
+            overflow: hidden;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: 14px "微软雅黑", "FontAwesome", "Arial Narrow", HELVETICA;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .dm-bbh a {
+            color: #fff;
+        }
+
+            .dm-bbh a:hover {
+                text-decoration: underline;
+            }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+        /* navMenu */
+        .navMenubox {
+            overflow: hidden;
+            padding-top: 8px;
+        }
+
+        .navMenu-top {
+            padding: 10px;
+            color: #fff;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+        }
+
+        .navMenu > li {
+            display: block;
+            margin: 0;
+            padding: 0;
+            border: 0px;
+        }
+
+            .navMenu > li > a {
+                display: block;
+                overflow: hidden;
+                padding-left: 13px;
+                line-height: 50px;
+                color: #333;
+                transition: all .3s;
+                position: relative;
+                text-decoration: none;
+                font-size: 14px;
+                border-bottom: 1px solid #ddd;
+                /*background:url(content/images/menu_ico.png) no-repeat 5px center;*/
+            }
+
+            .navMenu > li:nth-of-type(1) > a {
+                border-top: 1px solid #ddd;
+            }
+
+            .navMenu > li:last-child > a {
+            }
+
+            .navMenu > li > a > i {
+                font-size: 20px;
+                float: left;
+                font-style: normal;
+                margin: 0 5px;
+            }
+
+        .navMenu li a .arrow:before {
+            display: block;
+            float: right;
+            margin-top: 1px;
+            margin-right: 15px;
+            display: inline;
+            font-size: 16px;
+            font-family: FontAwesome;
+            height: auto;
+            content: "\f105";
+            font-weight: 300;
+            text-shadow: none;
+        }
+
+        .navMenu li a .arrow.open:before {
+            float: right;
+            margin-top: 1px;
+            margin-right: 15px;
+            display: inline;
+            font-family: FontAwesome;
+            height: auto;
+            font-size: 16px;
+            content: "\f107";
+            font-weight: 300;
+            text-shadow: none;
+        }
+
+        .navMenu > li > a.active, .navMenu > li > a:hover {
+            color: #0FA0D5;
+            background: #f2f2f2;
+            border-left: 3px solid #0FA0D5;
+        }
+
+        .navMenu > li > ul.sub-menu {
+            display: none;
+            list-style: none;
+            clear: both;
+            margin: 0px 0px 0px 0px;
+            padding-bottom: 5px;
+            background-color: #e7e7e7;
+            padding-left: 0px;
+            padding-top: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .navMenu > li > ul.sub-menu > li > ul.sub-menu {
+                display: none;
+                list-style: none;
+                clear: both;
+                margin: 0px 0px 0px 0px;
+                padding-bottom: 5px;
+                background-color: #e7e7e7;
+                padding-left: 10px;
+                padding-top: 8px;
+            }
+
+            .navMenu > li.active > ul.sub-menu, .navMenu > li > ul.sub-menu > li.active > ul.sub-menu {
+            }
+
+            .navMenu > li > ul.sub-menu li {
+                background: none;
+                margin: 0px;
+                padding: 0px;
+                border-bottom: 0px solid #eee;
+            }
+
+                .navMenu > li > ul.sub-menu li > ul.sub-menu li {
+                    background: none;
+                    margin: 0px;
+                    padding: 0px;
+                    background-color: transparent;
+                    border-bottom: 0px;
+                }
+
+                .navMenu > li > ul.sub-menu li > a {
+                    display: block;
+                    font-size: 14px;
+                    line-height: 40px;
+                    padding-left: 20px;
+                    color: #333;
+                    clear: both;
+                }
+
+                    .navMenu > li > ul.sub-menu li > a.active, .navMenu > li > ul.sub-menu li > a:hover, .navMenu > li > ul.sub-menu > li.active > a {
+                        color: #FFF;
+                        background: #1D79A2;
+                    }
+
+                .navMenu > li > ul.sub-menu li > ul.sub-menu li > a {
+                    padding-left: 20px !important;
+                }
+
+                .navMenu > li > ul.sub-menu li > ul.sub-menu li > ul.sub-menu li > a {
+                    padding-left: 35px !important;
+                    color: #666;
+                }
+
+        .icon_1:before {
+            content: "\f0ac";
+        }
+
+        .icon_2:before {
+            content: "\f0ac";
+        }
+
+        .icon_3:before {
+            content: "\f0ac";
+        }
+
+        .dm-top1 {
+            background-color: #298CEF;
+            width: 100%;
+            height: 60px;
+        }
+
+        .dm-name, .dm-sz {
+            float: left;
+        }
+
+            .dm-sz li {
+                float: left;
+            }
+
+        .dm-xtcd {
+            background-color: #393D49;
+            height: 40px;
+            line-height: 40px;
+            color: #fff;
+            font-size: 15px;
+            padding-left: 10px;
+        }
+        /*.navMenu li:first-child a:first-child
+        {
+        background-color:#1AA0D7;
+
+        }
+        .navMenu li:first-child a{
+            color: #fff;
+        }*/
+        .dm-top-right {
+            font-size: 14px;
+            position: fixed;
+            right: 0px;
+            top: 5px;
+        }
+
+        .w60 {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .top-right1 {
+            padding-top: 10px;
+        }
+
+        .top-right2 {
+            padding-top: 8px;
+        }
+
+        .dm-logo img {
+            padding-top: 12px;
+            width: 48px;
+            height: 48px;
+        }
+
+        .dm-logo {
+            font-size: 40px;
+            height: 75px;
+            line-height: 66px;
+            letter-spacing: 5px;
+        }
+
+        #divNav span {
+            cursor: pointer;
+        }
+
+        .layui-layer-loading .layui-layer-content {
+            width: 367px;
+            height: 64px;
+            background: none !important;
+        }
+
+        .dm-top-right {
+            margin-top: 10px;
+        }
+
+        .tabs-with-icon {
+            padding-left: 0px !important;
+        }
+
+        .layout-panel-center {
+            margin-top: 0px;
+        }
+
+        .layout-panel-west {
+            margin-top: 0px;
+        }
+
+        .layout-panel-south {
+            display: none !important;
+        }
+
+        .panel-tool {
+            top: 35%;
+        }
+
+        .layout-expand .panel-header {
+            background-color: #f5f5f5;
+        }
+
+        .logo-1 {
+            width: 200px;
+        }
+
+        .dm-bbh {
+            position: absolute;
+            top: 25px;
+            left: 205px;
+        }
+
+        .layout-panel-west .panel-header, .layout-panel-west .panel-title {
+            height: 28px !important;
+            line-height: 28px !important;
+        }
+    </style>
+    <div data-options="region:'north',border:false,height:80" style="overflow:hidden" class="header">
+        <div class="dm-top">
+            <div class="">
+                <hgroup id="heading" class="logo-1">
+                    <img src="/content/images/logo-l1.png" width="90%">
+                </hgroup>
+                <div class="dm-bbh"><a onclick="Version()" href="#">版本号：<span> </span></a></div>
+                <nav id="navbar">
+                    <ul class="nav nav-default" id="headmenu">
+                        <template v-for="item in items">
+                            <li v-bind:data-url="item.attributes.URL" v-bind:data-id="item.id">
+
+                                <a href="#" class="active">
+                                    <span class="h-ico">
+                                        <img v-bind:src="item.attributes.ICON">
+                                    </span>
+                                    <span>{{item.text}}</span>
+                                </a>
+
+                            </li>
+                        </template>
+
+                    </ul>
+                    <div class="dm-top-right">
+                        <span class="top-right1">
+                            欢迎
+                            @*| 在线用户:
+                                <span id="Online">1</span>*@
+                        </span>
+                        <div class="top-right2">
+                            <div class="w60" onclick="changepwd()">
+                                <i class="fa fa-lock"></i>
+                                密码
+                            </div>
+                            <div class="w60" onclick="Logout()">
+                                <i class="fa fa-power-off"></i>
+                                退出
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        </div>
+
+    </div>
+    <div id="left" data-options="region:'west',split:true,title:'导航菜单'" style="width:160px; border-bottom:1px solid #ccc;overflow-x: hidden;">
+        <div class="navMenubox">
+            <div id="slimtest1">
+                <ul id="demo" class="navMenu">
+                    <item v-for='model in treeData' v-bind:model='model' v-bind:key="model.id"></item>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div id="main" div data-options="region:'center'" style="background: #eee; overflow-y: hidden;">
+
+        <div class="easyui-tabs" id="tabs" data-options="fit:true,border:false"></div>
+
+        @*<iframe src="@wurl" id="contentIfr" style="border:none;height:100%;width:100%"></iframe>*@
+
+    </div>
+    <div id="mm" class="easyui-menu" style="width: 150px; display: none">
+        <div id="mm-tabupdate">刷新</div>
+        <div class="menu-sep"></div>
+        <div id="mm-tabclose">关闭</div>
+        <div id="mm-tabcloseall">全部关闭</div>
+        <div id="mm-tabcloseother">除此之外全部关闭</div>
+        <div class="menu-sep"></div>
+        <div id="mm-tabcloseright">当前页右侧全部关闭</div>
+        <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
+        <div class="menu-sep"></div>
+        <div id="mm-exit">退出</div>
+    </div>
+    <template id="item-template">
+        <li>
+            <a v-on:click="clickfun" v-bind:data-id="model.id" v-bind:data-url="model.attributes.URL" v-bind:data-width="model.attributes.width" v-bind:data-height="model.attributes.height" v-bind:data-title='model.text' v-bind:data-opentype="model.attributes.opentype" href="javascript:;" class="afinve">
+                <!--<i class="icon_1"></i>
+                -->
+                <span class="h-ico" v-if="model.attributes.ICON!=null&&model.attributes.ICON!=''">
+                    <img v-bind:src="model.attributes.ICON" width="16">
+                </span>
+                <span class="">{{model.text}}</span>
+                <span v-if='model.children.length>0' class="arrow"></span>
+            </a>
+            <ul class="sub-menu" v-if="model.children.length>
+        0">
+                <item class="item" v-for="cel in model.children" v-bind:model="cel"></item>
+
+            </ul>
+        </li>
+    </template>
+
+    <script type="text/javascript">
+        //function Online() { $.ajax({ url: "/Security/Online", type: "post", async: true, dataType: "json", success: function (data) { $("#Online").html(data.total); } }); }
+        //setInterval("Online()", 180000);
+
+
+        function closeThisTab(title, refs, fun, args) {
+            var tab = $('#tabs').tabs('getSelected');
+            var i = $('#tabs').tabs('getTabIndex', tab);
+            $('#tabs').tabs('close', i);
+            if (refs) {
+                if (title != '' && typeof (title) != "undefined") {
+                    TabFnSearch(title, fun, args);
+                }
+            }
+
+        }
+
+        function closeTab(title) {
+
+
+            $('#tabs').tabs('close', title);
+        }
+        function TabFnSearch(title, fun, args) {
+            var tab = $('#tabs').tabs('getTab', title);
+            var i = $('#tabs').tabs('getTabIndex', tab);
+            if (fun != '' && typeof (fun) != "undefined") {
+                $("#tabs .panel-body:eq(" + i + ") iframe")[0].contentWindow.dynamic(fn, args);;
+            } else {
+                $("#tabs .panel-body:eq(" + i + ") iframe").contents().find("#FnSearch_btn").trigger("click");
+            }
+            $('#tabs').tabs('select', title);
+        }
+
+        function menuclick(p) {
+            var url = $(p).data('url');
+            if (url == undefined) {
+            } else if (url == null || url == '#' || url == '') {
+            } else {
+                var menuid = $("#file_menuid").val();
+                $("#divNav").empty();
+                addTab($(p).data('title'), url);
+
+                $('.active.afinve').removeClass('active');
+                $(p).addClass("active");
+                return false;
+            }
+            var parent = $(p).parent().parent();//获取当前页签的父级的父级
+            var labeul = $(p).parent("li").find(">ul")
+            if ($(p).parent().hasClass('open') == false) {
+                //展开未展开
+                parent.find('ul').slideUp(300);
+                parent.find("li").removeClass("open")
+                parent.find('li a').removeClass("active").find(".arrow").removeClass("open")
+                $(p).parent("li").addClass("open").find(labeul).slideDown(300);
+                $(p).addClass("active").find(".arrow").addClass("open");
+                return false;
+            } else {
+                $(p).parent("li").removeClass("open").find(labeul).slideUp(300);
+                if ($(p).parent().find("ul").length > 0) {
+                    $(p).removeClass("active").find(".arrow").removeClass("open")
+                } else {
+                    $(p).addClass("active")
+                }
+                return false;
+            }
+
+        }
+        function open_nav() {
+            //	alert('')
+            $('.navMenu li:first').addClass("open");
+            if ($(".navMenu li:first ul").length > 0) {
+                $(".navMenu li:first ul li:first a:first").addClass("active");
+                $(".navMenu li:first ul").show();
+            } else {
+                $(".navMenu li:first a:first").addClass("active");
+            }
+
+        }
+        Vue.component('item', {
+            template: '#item-template',
+            props: {
+                model: Object
+            },
+            methods: {
+
+                clickfun: function (e) {
+                    var target = null;
+                    var ll = $(e.target).parent("a").length;
+                    if (ll == 0) {
+                        target = e.target;
+                    } else {
+                        target = $(e.target).parent("a")
+                    }
+                    menuclick(target)
+                    // e.target 是你当前点击的元素
+                    // e.currentTarget 是你绑定事件的元素
+                }
+            }
+        })
+        demo = new Vue({
+            el: '#demo',
+            data: {
+                treeData: []
+            }, updated: function () {
+                open_nav();
+            }
+        })
+        new Vue({
+            el: '#headmenu',
+            data: {
+                items: menobj
+            }, methods: {
+
+            }, mounted: function () {
+                setmenut();
+
+            }
+        });
+
+        $(function () {
+            function addTabss(subtitle, url) {
+                if (!$('#tabs').tabs('exists', subtitle)) {
+                    $('#tabs').tabs('add', {
+                        title: subtitle,
+                        content: createFrame(url),
+                        closable: false
+
+                    });
+                } else {
+                    $('#tabs').tabs('select', subtitle);
+                    $('#mm-tabupdate').click();
+                }
+                tabClose();
+            }
+            addTabss('首页', '/html/BloodManage/StockSign.html')
+        });
+        //function addTab(msg, u) {
+        //    var ff = $("#contentIfr").attr("src");
+        //    if (u != ff) {
+        //        loadindex = layer.load(1, {
+        //            content: '<div><h1><font color="#15428B">努力加载中···</font></h1><span>',
+        //            shade: [0.3, '#fff'] //0.1透明度的白色背景
+        //        });
+        //        $("#contentIfr").attr("src", u);
+        //    }
+        //}
+        function FnSearch() {
+            exiffun('FnSearch')
+        }
+        function FnSearchfun(fun) {
+            setTimeout(function () {
+                try {
+                    // 执行当前页面的搜索
+                    $("#tabs .panel-body:visible iframe").contents().find("#" + fun + "").trigger("click");
+                } catch (e) {
+
+                }
+            }, 300);
+        }
+        // 动态调用子页面方法
+        function exiffun(fn, args) {
+            $("#tabs .panel-body:visible iframe")[0].contentWindow.dynamic(fn, args);
+        }
+
+        function changepwd() {
+            // changeTabstiel();
+            //  completeLock();//
+        }
+
+        function Version() {
+            // changeTabstiel();
+            //  completeLock();//
+            parent.addTab("版本信息", "/Home/VersionInfo", 1000, 600);
+        }
+
+
+        function Logout() {
+            $.post("/Login/Loginout", function (data) {
+                window.top.location = '/Login';
+            })
+        }
+
+
+    </script>
+
+</body>
+</html>

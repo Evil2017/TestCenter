@@ -1,0 +1,155 @@
+﻿ @{
+    ViewBag.Title = "ResUse";
+       string restype = "2";
+    string resname = "物料";
+    switch (restype)
+    {
+        case "1":
+            resname = "耗材";
+            break;
+        case "2":
+            resname = "试剂";
+            break;
+        case "3":
+            resname = "辅材";
+            break;
+        case "4":
+            resname = "疫苗";
+            break;
+        case "5":
+            resname = "办公用品"; break;
+        case "6":
+            resname = "物品";
+            break;
+        default:
+            break;
+    }
+}
+ 
+<div class="dm-zl-box">使用登记
+    <form id="Test"  method="post" >
+        <table border="0" width="99%" cellpadding="0" cellspacing="0">
+              
+            <tr>
+                <td class="dm-td3">物料名称：</td>
+                <td> 
+                    <span   id="WLName"   ></span>
+                    <input type="hidden" name="OutID" id="OutID" value="2" />
+                    <input type="hidden" name="ID" id="ID" value="2" />
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td3">生产厂家：</td>
+                <td>
+                    <span   id="Fac"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td3">规格型号：</td>
+                <td>
+                    <span   id="GG"></span>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td3">生产批号：</td>
+                <td>
+                    
+                      <span   id="BetNO"></span>
+                </td>
+            </tr>
+           
+         <tr>
+                <td class="dm-td3">有效期：</td>
+                <td>
+                    
+                      <span   id="OutDate"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td3">出库数量：</td>
+                <td>
+                   
+                      <span   id="OutNum"></span>
+
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td3">领用结余：</td>
+                <td>
+                   
+                     <span   id="LYJYOld"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td3">报废日期：</td>
+                <td>
+                     <input type="text"  class="easyui-datebox"  name="BFRQ" id="BFRQ"  value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" data-options=""  />
+                    @*<input type="text"  class="easyui-datebox"  name="LYRQ" id="LYRQ"  value="@DateTime.Now.ToString("yyyy-MM-dd")" data-options="onSelect:bb"  />*@
+                </td>
+            </tr>
+             @*
+             <tr>
+                <td class="dm-td3">有效使用数量：</td>
+                <td>
+                    <input type="text" class="dm-input1" name="SYSL" id="SYSL"  onkeydown="easySelect('WXSL')" onchange="changeNum()"  />
+                </td>
+            </tr>
+             <tr>
+                <td class="dm-td3">无效使用数量：</td>
+                <td>
+                    <input type="text"  class="dm-input1"   name="WXSL" id="WXSL"   onkeydown="easySelect('BSSL')"  onchange="changeNum()" />
+                </td>
+            </tr>*@
+              <tr>
+                <td class="dm-td3">报损数量：</td>
+                <td>
+                    <input type="text"  class="dm-input1"   name="BSSL" id="BSSL"  onkeydown="easySelect('Remark')"  />
+                </td>
+            </tr>
+           @*   <tr>
+                <td class="dm-td3">消耗总数：</td>
+                <td>
+                    <input type="text"  class="dm-input1"   name="XHZS" id="XHZS"     readonly="true"  />
+                </td>
+            </tr>
+              <tr>
+                <td class="dm-td3">领用结余：</td>
+                <td>
+                    <input type="text"  class="dm-input1"   name="LYJY" id="LYJY"    readonly="true" />
+                </td>
+            </tr>*@
+            <tr>
+                <td class="dm-td3">操作者：</td>
+                <td>
+                     <input type="text" class="dm-input1" id="Name" name="Name" onfocus="UserSign(this.id,'操作员签名','Storage','0')"  />
+                   
+      <input type="hidden"   ID="FID" name="FID" />
+                </td>
+            </tr>
+          @*  <tr>
+                <td class="dm-td3">复核者：</td>
+                <td>
+                    <input type="text" class="dm-input1" id="SHName" name="SHName"  onfocus="UserSign(this.id,'操作员签名','Storage','1')" />
+                 
+                     <input type="hidden"   ID="SHFID" name="SHFID" />
+                </td>
+            </tr>*@
+            <tr>
+                <td class="dm-td3">备注：</td>
+                <td>
+                    <input type="text" class="dm-input1" id="Remark" name="Remark"   onkeydown="CheckOnClick('ok')"    />
+                 
+                    
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td3"></td>
+                <td>
+                    <button class="dm-btn-ck" id="ok" onclick="save()" type="button">保存
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

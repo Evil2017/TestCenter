@@ -1,0 +1,399 @@
+﻿@{
+    Layout = null;
+    //Random ran = new Random();
+    //int RandKey = ran.Next(100, 999);
+
+    string RandKey = DateTime.Now.Ticks.ToString();
+    string hh = ViewBag.hideBtn;
+    string ss = ViewBag.ShowBtn;
+    if (string.IsNullOrWhiteSpace(hh))
+    {
+        hh = "";
+    }
+    else
+    {
+        hh = hh.Replace(",,", ",").TrimEnd(',') + " {display:none}";
+
+    }
+    if (string.IsNullOrWhiteSpace(ss))
+    {
+        ss = "";
+    }
+    else
+    {
+        ss = ss.Replace(",,", ",").TrimEnd(',') + " {display:inline}";
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv=“Content-Security-Policy” content=“upgrade-insecure-requests” />
+    <meta name="renderer" content="webkit">
+    <title>@ViewBag.Title</title>
+
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏 -->
+    <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
+    <meta name="x5-page-mode" content="app"><!-- QQ应用模式 -->
+    <link rel="stylesheet" type="text/css" href="/content/easyui/themes/material/easyui.css?1144">
+    <link rel="stylesheet" type="text/css" href="/content/easyui/themes/icon.css">
+    @**@
+    <link rel="stylesheet" type="text/css" href="/content/css/cjb.css">
+    <link rel="stylesheet" href="/content/css/font-awesome.min.css">
+    <script type="text/javascript" src="/content/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/content/easyui/jquery.easyui.min.js?1234555"></script>
+    <script type="text/javascript" src="/content/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="/content/css/skin-blue3.css">
+    <script src="/content/easyui/keyCtr.js"></script>
+    <script src="/content/layer/layer.js"></script>
+    <script src="/content/js/vilnkpublic.js"></script>
+    <script src="/content/vue.js"></script>
+    <style type="text/css">
+      @hh
+
+            @ss
+
+    </style>
+    <script>
+
+        var accobj0017 = 0;
+        //打印方法
+        function Vilnkprint(refs) {
+            var n = '@ViewBag.Center';
+            if (n == '1') {
+                var msg = '[VL_Client_Print]' + refs;
+                alert(msg);
+            } else {
+                successmsg("请用客户端打开");
+            }
+        }
+        $(function () {
+
+            setTimeout(function () { fEnterFnSeach('listseach') }, 1000)
+
+        });
+
+        // ajax全局异常处理
+        $(document).ajaxError(function (event, xhr, options, info) {
+            layer.closeAll('dialog'); layer.closeAll('tips'); layer.closeAll('loading');
+            switch (xhr.status) {
+            	case (500):
+            		accobj0017 = 0;
+                    errmsg("服务器系统内部错误,请联系管理员");
+                    break;
+            	case (404): accobj0017 = 0;
+                    errmsg("找不到请求路径,请联系管理员！");
+                    break;
+            	case (401): accobj0017 = 0;
+                    errmsg("未登录");
+                    break;
+            	case (403): accobj0017 = 0;
+                    errmsg("无权限执行此操作");
+                    break;
+            	case (408): accobj0017 = 0;
+                    errmsg("请求超时");
+                    break;
+                case (200):
+                    if (xhr.responseText == "console.log(-192706)") {
+                        alert('请先重新登录！');
+                        window.top.location = '/Login';
+                    }
+                    break;
+                default:
+                    // console.log(xhr);
+                   // errmsg('系统出现异常，操作失败，请联系管理员少时诵诗书所所所所所！· ');
+            }
+            accobj0017 = 0;
+        });
+
+    var flag = true;
+        $.extend($.fn.validatebox.defaults.rules, {
+　　validate: {
+                validator: function (value, param) {
+          $.post(param, { str: value }, function (data) {
+              var msg = JSON.parse(data);
+              if (msg.status > 0) {
+                   message: "";
+                  flag = true;
+                  $.data(document.body,"flag",flag);
+               }else{
+            errmsg("批号不存在，请从新输入！");
+                  flag = false;
+                  $.data(document.body,"flag",flag);
+               }
+            });
+            return  $.data(document.body,"flag");
+        },
+                message: ''
+　　　　　　　　　　},
+                message: ""
+　　　　　　　　}
+);
+
+        function easySelect(NextInput) {
+            if (event.keyCode == 13 || (event.ctrlKey && event.keyCode == 77) || event.keyCode == 40) {
+                $("#" + NextInput + "").focus().select();
+            }
+        }
+
+        function CheckOnClick(NextInput) {//回车点击事件
+
+            if (event.keyCode == 13 || (event.ctrlKey && event.keyCode == 77) || event.keyCode == 40) {
+                document.getElementById(NextInput).click();
+                event.returnValue = false;
+            }
+        }
+
+        function UserSign(CheckTxtBox, title) {
+            $("#SignCheck").dialog({
+                width: 240,
+                height: 200,
+                modal: true,
+                iconCls: 'icon-tip',
+                title: title,
+                buttons: [{
+                    text: '确定',
+                    iconCls: 'icon-ok',
+                    handler: function () {
+                        UserSignCheck();
+                    }
+                }, {
+                    text: '取消',
+                    iconCls: 'icon-cancel',
+                    handler: function () {
+                        $('#SignCheck').dialog('close');
+                    }
+                }]
+            });
+            $("#SignCheck").dialog("open");
+            $("#SignCheck").dialog("center");
+            // $("#SignCheckLoginName").focus();
+            //setTimeout("formInt()", 5000);
+            document.getElementById("SignCheckLoginName").focus();
+            document.getElementById("SignCheckLoginName").value = "";
+            document.getElementById("SignCheckPwd").value = "";
+            document.getElementById("SignBox").value = CheckTxtBox;
+            document.getElementById("SignResultLab").innerHTML = "";
+
+        }
+
+        function UserSignCheck() {
+            var refs = "0";
+            CheckTxtBox = document.getElementById("SignBox").value;
+            $.post("/Home/CheckUserLogin", { loginName: document.getElementById("SignCheckLoginName").value, pwd: document.getElementById("SignCheckPwd").value }, function (data, status) {
+                if (data.indexOf('|') > -1) {
+                    document.getElementById("SignResultLab").innerHTML = data.split('|')[1];
+                }else{
+                if (data != "0") {
+                    document.getElementById(CheckTxtBox).value = data;
+                    if (CheckTxtBox == "SendOperator") {
+                        top.$('#checkOne').val(data);
+                    }
+                    if (CheckTxtBox == "ChekOperator") {
+                        top.$('#checkTwo').val(data);
+                    }
+                    $('#SignCheck').dialog('close');
+                }
+                }
+
+            });
+            return refs;
+        }
+        function LayerUserSignCheck() {
+            var refs = "0";
+
+            $.post("/Home/CheckUserLogin", { loginName: document.getElementById("layerLoginName").value, pwd: document.getElementById("layerCheckPwd").value }, function (data, status) {
+                if (data.indexOf('|') > -1) {
+                    document.getElementById("layerResultLab").innerHTML = data.split('|')[1];
+                } else {
+                    if (data != "0") {
+                        SignCheckBack();
+                        $("#layerCheckPwd").val('');
+                    }
+                }
+
+            });
+            return refs;
+        }
+
+        function printCtrsss(printDate) {
+            alert("[VL_Client_Run]:" + printDate);
+        }
+
+
+
+    </script>
+    <style type="text/css">
+        .dm-dqwz {
+            background-color: #fff !important;
+            border-bottom: 1px solid #ddd !important;
+            height: 34px !important;
+            line-height: 34px !important;
+            padding-left: 10px;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            z-index: 9;
+        }
+
+            .dm-dqwz a {
+                color: #0FA0D5;
+            }
+
+        .layout-panel-center {
+            margin-top: 5px;
+        }
+
+        .layout-panel-west {
+            margin-top: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .panel-title.panel-with-icon, .panel-header.panel-header-noborder.window-header {
+            height: 31px !important;
+            line-height: 31px !important;
+            font-size: 14px !important;
+        }
+    </style>
+</head>
+
+<div style="display: none">
+    <div id="SignCheck" class="easyui-dialog" data-options="closed:true">
+        <table width="100%" style="margin-top: 10px;">
+            <tr>
+                <td width="80px" align="right" height="35">
+                    用户名：
+                </td>
+                <td>
+                    <input type="text" id="SignCheckLoginName" size="10" style="height:20px" onkeydown="easySelect('SignCheckPwd')" /><input type="hidden" id="SignBox" />
+                    <input id="checkOne" type="hidden" value="" />
+                    <input id="checkTwo" type="hidden" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td width="80px" align="right" height="35">
+                    密&nbsp;码：
+                </td>
+                <td>
+                    <input type="password" size="10" id="SignCheckPwd" style="height:20px" onkeydown="if(event.keyCode == 13){UserSignCheck();}" />
+                </td>
+            </tr>
+            <tr>
+                <td width="80px" colspan="2" style="text-align: center; color: red;">
+                    <span id="SignResultLab"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+<body class="easyui-layout" id="layoutbody">
+    <div id="LayerSignCheck" style="display: none">
+        <table width="100%" style="margin-top: 10px;">
+            <tr>
+                <td width="80px" align="right" height="35">
+                    用户名：
+                </td>
+                <td>
+                    <input type="text" id="layerLoginName" size="10" style="height:20px" onkeydown="easySelect('layerCheckPwd')" /><input type="hidden" id="SignBox" />
+
+                </td>
+            </tr>
+            <tr>
+                <td width="80px" align="right" height="35">
+                    密&nbsp;码：
+                </td>
+                <td>
+                    <input type="password" size="10" id="layerCheckPwd" style="height:20px" />
+                </td>
+            </tr>
+            <tr>
+                <td width="80px" colspan="2" style="text-align: center; color: red;">
+                    <span id="layerResultLab"></span>
+                </td>
+            </tr>
+            <tr>
+                <td width="80px" colspan="2" style="text-align: center; color: red;">
+                    <span id="layerResultLab"></span>
+                </td>
+            </tr>
+        </table>
+        <div class="fj-btn">
+            <button class="ss-btn" id="FnSearch_btn" onclick="LayerUserSignCheck()" type="button">
+                <i class="fa fa-check"></i>
+                确定
+            </button>
+        </div>
+    </div>
+    <div id='loadingDiv' style="position: absolute; z-index: 1000; top: 0px; left: 0px;
+width: 100%; height: 100%; background: white; text-align: center;">
+        <h1 style="top: 48%; position: relative;">
+            <font color="#15428B">努力加载中···</font>
+        </h1>
+    </div>
+    <script type="text/javascript">
+        var loadmsg = document.getElementById("loadingDiv");
+        var frameId = window.frameElement && window.frameElement.id || '';
+        if (frameId == 'contentIfr') {         //  closeLoading();
+
+            document.body.removeChild(loadmsg);
+        }
+    </script>
+    @{if (ViewBag.LoadTree != null)
+        {
+            System.Data.DataTable lss = ViewBag.LoadTree;
+            <div class="dm-dqwz" data-options="region:'north',border:false" id="aaaa">
+                当前位置：
+                @for (int n = lss.Rows.Count - 1; n >= 0; n--)
+                {
+
+                    <a id="a0">@lss.Rows[n]["Title"]</a>if (n != 0)
+                    {
+                        <span>&nbsp;> &nbsp;</span>
+                    }
+                }
+            </div>
+
+
+
+        }
+
+    }
+
+
+    @RenderBody()
+    <div data-options="region:'south',border:false" style="height:2px !important;background-color:transparent !important;z-index:0 !important">
+    </div>
+
+    <script type="text/javascript">
+
+        function completeLock() {
+
+            //捕获页
+            layer.open({
+                type: 2,
+                shade: false,
+                zIndex: 300,
+                shade: 0.3,
+                area: ['450px', '300px'],
+                skin: 'layui-layer-lan',
+                closeBtn: 0,
+                title: "解锁",
+                content: "/login/LockLogin",
+                btnAlign: 'c',
+
+            });
+        }
+
+    </script>
+</body>
+
+
+</html>

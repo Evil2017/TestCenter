@@ -1,60 +1,274 @@
-﻿<!--登录页和首页模板-->
-@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment
-<!DOCTYPE HTML>
+﻿@{
+    Layout = null;
+    //Random ran = new Random();
+    //int RandKey = ran.Next(100, 999);
+
+    string RandKey = DateTime.Now.Ticks.ToString();
+    string hh = ViewBag.hideBtn;
+    string ss = ViewBag.ShowBtn;
+    if (string.IsNullOrWhiteSpace(hh))
+    {
+        hh = "";
+    }
+    else
+    {
+        hh = hh.Replace(",,", ",").TrimEnd(',') + " {display:none}";
+
+    }
+    if (string.IsNullOrWhiteSpace(ss))
+    {
+        ss = "";
+    }
+    else
+    {
+        ss = ss.Replace(",,", ",").TrimEnd(',') + " {display:inline}";
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv=“Content-Security-Policy” content=“upgrade-insecure-requests” />
+    <meta name="renderer" content="webkit">
+    <title>南岳生物原料血浆公司-浆站监管平台</title>
 
-    <meta name="keywords" content="血浆检测中心">
-    <meta name="description" content="血浆检测中心">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait"><!-- uc强制竖屏  湖南省单采血浆站监管平台 -->
+    <meta name="x5-orientation" content="portrait"><!-- QQ强制竖屏 -->
+    <meta name="x5-page-mode" content="app"><!-- QQ应用模式 -->
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/material/easyui.css?1144">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
 
-    <link rel="bookmark" href='@Url.Content("~/favicon.ico")' />
-    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")" type="image/x-icon" />
-
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/lib/bootstrap/3.3.7/css/bootstrap.min.css"))
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/lib/fontawesome/4.7.0/css/fontawesome.min.css"))
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/lib/jquery/2.1.4/jquery.min.js"))
-
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/lib/bootstrap/3.3.7/js/bootstrap.min.js"))
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/lib/layer/3.1.1/layer.min.js"))
-
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/TestCenter/css/style.min.css"))
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/TestCenter/js/TestCenter.min.js"))
-
-    <!--首页需要用到的js开始-->
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/TestCenter/js/TestCenter-index.min.js"))
-
-
-
-    <script type="text/javascript" src='@Url.Content("~/lib/jquery/dist/jquery.js")'></script>
-
-    <script type="text/javascript" src='@Url.Content("~/lib/jquery.cookie/1.4.1/jquery.cookie.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")'></script>
-
-    <script type="text/javascript" src='@Url.Content("~/lib/jquery.metisMenu/1.1.3/jquery.metisMenu.js")'></script>
-    <script type="text/javascript" src='@Url.Content("~/lib/jquery.slimscroll/1.3.8/jquery.slimscroll.min.js")'></script>
-    <!--首页需要用到的js结束-->
-    @RenderSection("header", false)
-    <title>血浆检测中心</title>
+    <link rel="stylesheet" type="text/css" href="/css/cjb.css?@RandKey">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js?1234555"></script>
+    <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/skin-blue3.css?@RandKey">
+    <script src="/easyui/keyCtr.js?@RandKey"></script>
+    <script src="/layer/layer.js"></script>
+    <script src="/js/vilnkpublic.js?@RandKey"></script>
+    <script src="/vue.js"></script>
+    @* <script src="~/jqueryui/jquery-ui.min.js"></script>*@
     <style type="text/css">
-        .nav > li:hover .dropdown-menu {
-            display: block;
+      @hh
+
+            @ss
+
+    </style>
+    <script>
+
+        var accobj0017 = 0;
+        //打印方法
+        function Vilnkprint(refs) {
+            var n = '@ViewBag.Center';
+            if (n == '1') {
+                var msg = '[VL_Client_Print]' + refs;
+                alert(msg);
+            } else {
+                successmsg("请用客户端打开");
+            }
+        }
+        $(function () {
+
+            setTimeout(function () { fEnterFnSeach('listseach') }, 1000)
+
+        });
+
+        // ajax全局异常处理
+        $(document).ajaxError(function (event, xhr, options, info) {
+            layer.closeAll('dialog'); layer.closeAll('tips'); layer.closeAll('loading');
+            switch (xhr.status) {
+            	case (500):
+            		accobj0017 = 0;
+                    errmsg("服务器系统内部错误,请联系管理员");
+                    break;
+            	case (404): accobj0017 = 0;
+                    errmsg("找不到请求路径,请联系管理员！");
+                    break;
+            	case (401): accobj0017 = 0;
+                    errmsg("未登录");
+                    break;
+            	case (403): accobj0017 = 0;
+                    errmsg("无权限执行此操作");
+                    break;
+            	case (408): accobj0017 = 0;
+                    errmsg("请求超时");
+                    break;
+                case (200):
+                    if (xhr.responseText == "console.log(-192706)") {
+                        alert('请先重新登录！');
+                        window.top.location = '/Login';
+                    }
+                    break;
+                default:
+                    // console.log(xhr);
+                   // errmsg('系统出现异常，操作失败，请联系管理员少时诵诗书所所所所所！· ');
+            }
+            accobj0017 = 0;
+        });
+
+    var flag = true;
+
+
+        $.extend($.fn.datagrid.methods, {
+            fixRownumber: function (jq) {
+                return jq.each(function () {
+                    var panel = $(this).datagrid("getPanel");
+                    var clone = $(".datagrid-cell-rownumber", panel).last().clone();
+                    clone.css({
+                        "position": "absolute",
+                        left: -1000
+                    }).appendTo("body");
+                    var width = clone.width("auto").width();
+                    if (width > 25) {
+                        //多加5个像素,保持一点边距
+                        $(".datagrid-header-rownumber,.datagrid-cell-rownumber", panel).width(width + 5);
+                        $(this).datagrid("resize");
+                        //一些清理工作
+                        clone.remove();
+                        clone = null;
+                    } else {
+                        //还原成默认状态
+                        $(".datagrid-header-rownumber,.datagrid-cell-rownumber", panel).removeAttr("style");
+                        $(this).datagrid("resize");
+                    }
+                });
+            }
+        });
+
+
+
+
+
+
+
+    </script>
+    <style type="text/css">
+        .dm-dqwz {
+            background-color: #fff !important;
+            border-bottom: 1px solid #ddd !important;
+            height: 34px !important;
+            line-height: 34px !important;
+            padding-left: 10px;
+            position: relative;
+            left: 5px;
+            top: 5px;
+            z-index: 9;
+        }
+
+        body, iframe {
+            background-color: #efefef !important;
+        }
+
+        .dm-dqwz a {
+            color: #0FA0D5;
+        }
+
+        .tabs-wrap {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .layout-panel-center {
+            margin-top: 5px;
+        }
+
+        .layout-panel-west {
+            margin-top: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .panel-title.panel-with-icon, .panel-header.panel-header-noborder.window-header {
+            height: 31px !important;
+            line-height: 31px !important;
+            font-size: 14px !important;
         }
     </style>
-    <script type="text/javascript">
-        var ctx = '@Url.Content("~/")';
-    </script>
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg login">
-    @RenderBody()
-    @RenderSection("footer", false)
+<div style="display: none">
+    <div id="SignCheck" class="easyui-dialog" data-options="closed:true">
+        <table width="100%" style="margin-top: 10px;">
+            <tr>
+                <td width="80px" align="right" height="35">
+                    用户名：
+                </td>
+                <td>
+                    <input type="text" id="SignCheckLoginName" size="10" style="height:20px" onkeydown="easySelect('SignCheckPwd')" /><input type="hidden" id="SignBox" />
+                    <input id="checkOne" type="hidden" value="" />
+                    <input id="checkTwo" type="hidden" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td width="80px" align="right" height="35">
+                    密&nbsp;码：
+                </td>
+                <td>
+                    <input type="password" size="10" id="SignCheckPwd" style="height:20px" onkeydown="if(event.keyCode == 13){UserSignCheck();}" />
+                </td>
+            </tr>
+            <tr>
+                <td width="80px" colspan="2" style="text-align: center; color: red;">
+                    <span id="SignResultLab"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
 
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/TestCenter/css/TestCenter.min.css"))
-    @BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/TestCenter/js/TestCenter-init.min.js"))
+
+
+<body class="easyui-layout" id="layoutbody" onload="javascript:window.resizeTo(screen.availWidth,screen.availHeight);window.moveTo(0,0)">
+
+    <div id='loadingDiv' style="position: absolute; z-index: 1000; top: 0px; left: 0px;
+width: 100%; height: 100%; background: white; text-align: center;">
+        <h1 style="top: 48%; position: relative;">
+            <font color="#15428B">努力加载中···</font>
+        </h1>
+    </div>
+    <script type="text/javascript">
+        var loadmsg = document.getElementById("loadingDiv");
+        var frameId = window.frameElement && window.frameElement.id || '';
+        if (frameId == 'contentIfr') {         //  closeLoading();
+
+            document.body.removeChild(loadmsg);
+        }
+    </script>
+    @{if (ViewBag.LoadTree != null)
+        {
+            System.Data.DataTable lss = ViewBag.LoadTree;
+            <div class="dm-dqwz" data-options="region:'north',border:false" id="aaaa">
+                当前位置：
+                @for (int n = lss.Rows.Count - 1; n >= 0; n--)
+                {
+
+                    <a id="a0">@lss.Rows[n]["Title"]</a>if (n != 0)
+                    {
+                        <span>&nbsp;> &nbsp;</span>
+                    }
+                }
+            </div>
+
+
+
+        }
+
+    }
+
+
+    @RenderBody()
+
+
+    <div data-options="region:'south',border:false" style="height:2px !important;background-color:transparent !important;z-index:0 !important">
+    </div>
+
+
 </body>
+
+
 </html>

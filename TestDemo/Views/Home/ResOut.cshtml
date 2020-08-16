@@ -1,0 +1,166 @@
+﻿
+ @{
+    ViewBag.Title = "ResOut";
+    string restype = "2";
+    string resname = "物料";
+    switch (restype)
+    {
+        case "1":
+            resname = "耗材";
+            break;
+        case "2":
+            resname = "试剂";
+            break;
+        case "3":
+            resname = "辅材";
+            break;
+        case "4":
+            resname = "疫苗";
+            break;
+        case "5":
+            resname = "办公用品"; break;
+        case "6":
+            resname = "物品";
+            break;
+        default:
+            break;
+    }
+}
+<style type="text/css">
+    .dm-input1{
+        margin-left: 10px;
+    }
+    .dm-td3 {
+        height:38px;
+        line-height: 38px;
+    }
+</style>
+ <div class="dm-zl-box">
+     <div class="dm-ti1"> <b>2</b>
+     </div>
+     <form id="Test"  method="post" >
+         <table border="0" width="700" cellpadding="0" cellspacing="0" style="margin-top:20px;">
+             <tr>
+                 <td class="dm-td3">物料名称：</td>
+                 <td>
+                     <input type="text"  class="dm-input1"   id="WLName" name="WLName" />
+                     <input type="hidden" name="ID" id="ID" value="" />
+                 </td>
+
+                 <td class="dm-td3">生产厂家：</td>
+                 <td>
+                     <input type="text" class="dm-input1" name="Fac" id="Fac"/>
+                 </td>
+             </tr>
+             <tr>
+                 <td class="dm-td3">规格型号：</td>
+                 <td>
+                     <input type="text" class="dm-input1" name="GG" id="GG"/>
+
+                 </td>
+
+                 <td class="dm-td3">生产批号：</td>
+                 <td>
+                     <input type="text" class="dm-input1" name="BetNO" id="BetNO"  />
+
+                 </td>
+             </tr>
+             <tr>
+                 <td class="dm-td3">仓库库存：</td>
+                 <td>
+                     &nbsp;&nbsp;&nbsp;<label id="NUM"  name="NUM">0</label>
+                     <input type="checkbox" onclick="ha()" id="a" name="a" value="1" />
+                     @*修正库存
+                     <input type="number" class="dm-input2" name="SYNUM" id="SYNUM" style="display:none"   />
+                     <input type="hidden"   name="XzNum" id="XzNum" />
+                     <input type="hidden"  name="XzNum2" id="XzNum2" />*@
+                 </td>
+
+                 <td class="dm-td3">单位：</td>
+                 <td>
+                     <input type="text" class="dm-input1" name="DW" id="DW"  />
+                 </td>
+             </tr>
+             <tr>
+                 <td class="dm-td3">出库数量：</td>
+                 <td>
+                     <input type="text" class="dm-input1" name="CNum" id="CNum" onkeydown="datetimeboxSelect('Cdate')"  />
+                 </td>
+
+                 <td class="dm-td3">出库日期：</td>
+                 <td>
+                     <input type="text"  class="easyui-datebox"  name="Cdate" id="Cdate" onkeydown="easySelect('Name')" value="@DateTime.Now.ToString("yyyy-MM-dd")"  />
+                 </td>
+             </tr>
+             <tr>
+                 <td class="dm-td3">操作者：</td>
+                 <td>
+                     <input type="text" class="dm-input1" id="Name" name="Name" onfocus="UserSign(this.id,'操作员签名','Storage','0')"  />
+
+                     <input type="hidden"   ID="FID" name="FID" />
+                 </td>
+
+                 <td class="dm-td3">复核者：</td>
+                 <td>
+                     <input type="text" class="dm-input1" id="SHName" name="SHName"  onfocus="UserSign(this.id,'操作员签名','Storage','1')" />
+
+                     <input type="hidden"   ID="SHFID" name="SHFID" />
+                 </td>
+             </tr>
+             <tr>
+                 <td class="dm-td3">备注：</td>
+                 <td>
+                     <input type="text" class="dm-input1" name="Remark" id="Remark"  onkeydown="CheckOnClick('ok')"  />
+
+                 </td>
+
+                 <td class="dm-td3"></td>
+                 <td>
+                     <button class="dm-btn-ck" id="ok" onclick="save()" type="button">保存</button>
+                 </td>
+             </tr>
+         </table>
+     </form>
+ </div>
+<div>
+    <div data-options="region:'center'" style="position:relative">
+          <table id="jyjl" fit="false"></table>
+    </div>
+</div>
+<script>
+    $(function () { init();});
+      function init() {
+         $('#jyjl').datagrid({
+             url: " ",
+             queryParams: {},
+             onDblClickRow: function (index, row) { },
+             fit: false,
+             pageSize: 20,
+             columns: [[
+                     { field: 'StockID', title: '', width: 80, hidden: true },
+                     { field: 'OutDate', title: '日期', width: 80 },
+                     { field: 'ResName', title: '材料名称', width: 140 },
+                     { field: 'Factory', title: '生产厂家', width: 140 },
+                     { field: 'spec', title: '规格', width: 90 },
+                     { field: 'BictNo', title: '批号', width: 110 },
+
+                     { field: 'DW', title: '单位', width: 100 },
+                      { field: 'OldNum', title: '上次库存', width: 80 },
+                       { field: 'OutNum', title: '出库数量', width: 80 },
+                        { field: 'StockNum', title: '库存剩余', width: 80 },
+                         { field: 'OldSYNum', title: '当日领用结余数', width: 80 },
+                          { field: 'OldStockNum', title: '库存总数', width: 80 },
+                        { field: 'userID', title: '操作人', width: 70 },
+                        { field: 'ConUserID', title: '审核人', width: 70 },
+                        {
+                            field: 'opts', title: '操作', width: 80, formatter: function (i, r) { //SelectID
+                                return "<a href='#' onclick='Edit(" + r.ID + ")'>修改</a> <a href='#' onclick='Del(" + r.ID + ")' >删除</a>"
+                            }
+                        },
+                     //{ field: 'opts', title: '操作', width: 50 },
+
+             ]]
+         });
+     }
+
+</script>

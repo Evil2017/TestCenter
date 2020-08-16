@@ -1,0 +1,196 @@
+﻿@{
+    ViewBag.Title = "TestResultList"; // 化验结果查询
+}
+
+<style type="text/css">
+    .panel-body {
+        background-color: #fff;
+        border-top: none;
+    }
+    .panel-fit body{
+        overflow: hidden;
+    }
+</style>
+    <table id="jyjl" fit="true" title=""></table>
+    <div style="padding:5px 0px 5px 5px;" id="seachtoolwx">
+        <label>起始时间：</label>
+        <input type="text" name="Stime" id="Stime" class="easyui-datebox">
+        <label>到</label>
+        <input type="text" name="Etime" id="Etime" class="easyui-datebox">
+        <label>姓名：</label>
+        <input type="text" name="DonorName" id="DonorName" class="dm-input1" style="width:60px"  onkeydown="OK()"/>
+        <label>档案编号：</label>
+        <input type="text" name="DonorID" id="DonorID" class="dm-input1" style="width:80px" onkeydown="OK()" />
+        <label>身份证号码：</label>
+        <input type="text" name="CertID" id="CertID" class="dm-input1" style="width:140px" onkeydown="OK()" />
+         <label>登记号：</label>
+        <input type="text" name="Donateids" id="Donateids" class="dm-input1" style="width:60px" onkeydown="OK()" />
+         <label>检测批次：</label>
+        <input type="text" name="Bectnos" id="Bectnos" class="dm-input1" style="width:65px" onkeydown="OK()" />
+        <label>检验结论：</label>
+        <select name="TestResult" id="TestResult" class="dm-input1" style="width:65px" onchange="Search()">
+            <option value="">全部</option>
+            <option value="合格">合格</option>
+          <option value ="不合格">不合格</option>
+            <option value="复检">复检</option>
+        </select>
+        <button class="dm-btn-ck" onclick="Search()" type="button">搜索</button>
+        <button class="dm-btn-ck" onclick="PrintTestRecoard()" type="button">打印</button>
+         <button class="dm-btn-ck" onclick="PrintTestRecoardss()" type="button">新版不合格报告单打印</button>
+         <button class="dm-btn-ck" onclick="Dataexport()" type="button">导出</button>
+
+    </div>
+
+<script>
+    function init()
+    {
+        $('#jyjl').datagrid({
+            url: "/BloodTest/getTestResultList?Stime=&Etime=&DonorID=&DonorName=&CertID=&TestResult=",
+            queryParams: {  },
+            toolbar: '#seachtoolwx',
+            onDblClickRow: function (index, row) { },
+            rowStyler: function (index, row) {
+                if (row.TestResult == "合格") { return 'background-color:#98FB98;'; }
+            },
+            fit: true,
+            columns: [[
+             
+                {
+                    field: 'SDonorID', title: '档案编号', width: 110, align: "center", formatter: DonorInfo_view
+                },
+                { field: 'DonorName', title: '姓名', width: 55, align: "center" },
+                { field: 'CertID', title: '身份证号码', width: 150, align: 'center' },
+                { field: 'Gender', title: '性别', width: 25, align: "center" },
+                { field: 'Age', title: '年龄', width: 25, align: "center" },
+                { field: 'CommAddress', title: '住址', width: 300, align: 'center' },
+                { field: 'TestDate', title: '化验日期', width: 140, align: "center" },
+                { field: 'SDonateID', title: '登记号', width: 50, align: "center" },
+                { field: 'BoardNO', title: '版号', width: 70, align: "center" },
+                { field: 'Board_Place', title: '版位置', width: 45, align: "center" },
+                { field: 'TestResult', title: '检验结果', width: 50, align: "center", formatter: function (v, i, r) { if (v == "不合格") { return "<span style='color: red'>" + v + "</span>"; } else { return v;} } },
+                { field: 'TestDoctor', title: '检验医生', width: 50, align: "center" },
+                { field: 'BloodType', title: '血型', width: 40, align: "center" },
+                { field: '51', title: '血清蛋白（g/L）', width: 50, align: "center" },
+                { field: '11', title: '血浆蛋白（g/L）', width: 50, align: "center" },
+                { field: '12', title: 'ALT（KarU）', width: 60, align: "center" },
+                { field: '13', title: 'HBsAg', width: 45, align: "center" , formatter:setColumnForeColor},
+                { field: '14', title: '抗-HCV', width: 50, align: "center", formatter: setColumnForeColor },
+                { field: '15', title: '抗-HIV', width: 50, align: "center", formatter: setColumnForeColor },
+                { field: '16', title: '梅毒', width: 50, align: "center", formatter: setColumnForeColor },
+
+            ]], onLoadSuccess: function (data) {
+                $("div.pagination-info").html(data.displayMsg + " ，" + $("div.pagination-info").html());
+
+
+            }
+        });
+    }
+    function setColumnForeColor(value, row, index) {
+        if (value == "阳性") {
+            return "<span style='color: red'>" + value + "</span>";
+        }
+        else {
+            return value;
+        }
+    }
+
+    function Search()
+    {
+        var Stime = $("#Stime").val();
+        var Etime = $("#Etime").val();
+        var DonorName = $("#DonorName").val();
+        var DonorID = $("#DonorID").val();
+        var CertID = $("#CertID").val();
+        var TestResult = $("#TestResult").val();
+        var Donateids = $("#Donateids").val();
+        var Bectnos = $("#Bectnos").val();
+        $('#jyjl').datagrid("reload", { Stime: Stime, Etime: Etime, DonorName: DonorName, DonorID: DonorID, CertID: CertID, TestResult: TestResult, Donateids: Donateids, Bectnos: Bectnos });
+    }
+    function OK() {
+        if (event.keyCode == 13) { Search(); }
+    }
+    ///打印报告单
+    function PrintTestRecoard()
+    {
+       
+        var row = $('#jyjl').datagrid('getSelected');
+        var TestResults = $("#TestResult").val();
+       // alert(TestResults);
+        if (row) {
+            if (row.DonateID != "") {
+                $.ajax({
+                    url: "/BloodTest/PrintTestRecoard",
+                    type: "post",
+                    data: { DonateID: row.DonateID, TestResults: TestResults },
+                    success: function (msg) {
+                       // errmsg(msg);
+                        Vilnkprint(msg);
+                    }
+                });
+            }
+            else {
+                errmsg("请选择要打印的行");
+            }
+
+        }
+        else {
+            errmsg("请选择要打印的行");
+        }
+    }
+
+    //PrintTestRecoardss
+    function PrintTestRecoardss() {
+
+        var row = $('#jyjl').datagrid('getSelected');
+        var TestResults = $("#TestResult").val();
+        // alert(TestResults);
+        if (row) {
+            if (row.DonateID != "") {
+                $.ajax({
+                    url: "/BloodTest/PrintBHGTestRecoard",
+                    type: "post",
+                    data: { DonateID: row.DonateID, TestResults: TestResults },
+                    success: function (msg) {
+                        // errmsg(msg);
+                        Vilnkprint(msg);
+                    }
+                });
+            }
+            else {
+                errmsg("请选择要打印的行");
+            }
+
+        }
+        else {
+            errmsg("请选择要打印的行");
+        }
+    }
+    init();
+
+    function Dataexport() {
+        $.ajax({
+            url: "/BloodTest/getTestResultList",
+            data: {
+                Stime: $("#Stime").val(),
+                Etime: $("#Etime").val(),
+                DonorName: $("#DonorName").val(),
+                DonorID: $("#DonorID").val(),
+                CertID: $("#CertID").val(),
+                TestResult: $("#TestResult").val(),
+                 Donateids : $("#Donateids").val(),
+                  Bectnos : $("#Bectnos").val(),
+                DataType: "export", page: 0, rows: 0,
+            },
+            success: function (msg) {
+                var jo = eval("(" + msg + ")");
+                if (jo.Status == "1") {
+                    var URL = jo.URL;
+                    location.href = URL;
+                }
+                else {
+                    layer.alert(jo.Sign);
+                }
+            }
+        })
+    }
+</script>

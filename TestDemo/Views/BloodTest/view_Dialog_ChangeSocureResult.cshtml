@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "view_Dialog_ChangeSocureResult";
+}
+
+<style>
+    table tr {
+        height: 25px;
+    }
+</style>
+<table width="100%" style="padding-left:15px">
+    <tr>
+        <td align="right">酶标版号：</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td align="right">版位置：</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td align="right">检测项目：</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td align="right">标本：</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td align="right">版内容：</td>
+        <td>
+            <input type="text" id="Result" onfocus="this.select()" onkeydown="keyClick(ResultSave)" style="width:120px;height:23px;font-weight:bold" />
+        </td>
+    </tr> 
+    <tr>
+        <td colspan="2" align="center">
+            <input type="button" value="保存" onclick="ResultSave()" />
+        </td>
+    </tr>
+</table>

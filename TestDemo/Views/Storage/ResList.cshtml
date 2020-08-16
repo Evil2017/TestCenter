@@ -1,0 +1,89 @@
+﻿ @{
+    ViewBag.Title = "ResList";
+       string restype = "2";
+    string Place = "1";
+    string resname = "物料";
+    switch (restype)
+    {
+        case "1":
+            resname = "耗材";
+            break;
+        case "2":
+            resname = "试剂";
+            break;
+        case "3":
+            resname = "辅材";
+            break;
+        case "4":
+            resname = "疫苗";
+            break;
+        case "5":
+            resname = "办公用品";
+            break;
+
+        default:
+            break;
+    }
+}
+ <style type="text/css">
+    .panel-body{
+        background-color: #fff;
+        border:none;
+    }
+</style>
+<div data-options="region:'center'">
+    <table id="jyjl" fit="true"></table>
+    <div style="background-color:#fff; padding:5px 0px 5px 5px;" id="seachtoolwx">
+         <button class="dm-btn-ck" onclick="Add('0')" type="button">新增</button>
+         &nbsp;&nbsp;
+        <label>材料名称：</label>
+          <input type="text" class="dm-input1" ID="ResName" onkeydown="OK()"/>
+          &nbsp;&nbsp;
+        <label>生产厂家：</label>
+          <input type="text" class="dm-input1" ID="Factory" onkeydown="OK()" />
+        &nbsp;&nbsp;
+        <button class="dm-btn-ck" onclick="Search()" type="button">搜索</button>
+
+    </div>
+</div>
+<script>
+    $(function () { init();});
+     function init() {
+        $('#jyjl').datagrid({
+            url: "",
+            queryParams: {},
+            toolbar: '#seachtoolwx',
+            onDblClickRow: function (index, row) { },
+            fit: true,
+            onLoadSuccess: function () {
+                if (ty != '2') {
+                    $('td[field="IfMain"]').hide();
+                }
+            },
+            columns: [[
+
+                    { field: 'ResName', title: '物料名称', width: 190 },
+                    { field: 'Factory', title: '厂家', width: 190 },
+                    { field: 'Spec', title: '规格', width: 190 },
+                    { field: 'PZ', title: '批准文号', width: 190 },
+                    { field: 'Unit', title: '单位', width: 90 },
+                     {
+                         field: 'IfMain', title: '试剂类型', width: 90, formatter: function (i, r) {
+                             var g ='主要试剂'
+                             if (r.IfMain == '0') { g = "复检试剂"; }
+                             if (r.IfMain == '2') { g = "其它"; }
+                             return g;
+                         }
+                     },
+                       {
+                           field: 'opts', title: '操作', width: 180, formatter: function (i, r) {
+                               return '<a href="#" onclick="Add(\'' + r.ID + '\')">修改</a>&nbsp;&nbsp; <a href="#" onclick="Del(\'' + r.ID + '\')" >删除</a>'
+                           }
+                       },
+                    //{ field: 'opts', title: '操作', width: 50 },
+
+            ]]
+        });
+    }
+
+</script>

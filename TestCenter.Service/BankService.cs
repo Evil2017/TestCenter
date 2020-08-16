@@ -1,23 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Data.Common;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using TestCenter.Data.Repository;
-using TestCenter.Entity;
-using TestCenter.Model.Param;
 using TestCenter.Util;
 using TestCenter.Util.Extension;
 using TestCenter.Util.Model;
+using TestCenter.Data;
+using TestCenter.Data.Repository;
+using TestCenter.Entity.TestManage;
+using TestCenter.Model.Param.TestManage;
 
-namespace TestCenter.Service
+namespace TestCenter.Service.TestManage
 {
     /// <summary>
     /// 创 建：admin
     /// 日 期：2020-08-14 09:26
     /// 描 述：浆站服务类
     /// </summary>
-    public class BankService : RepositoryFactory
+    public class BankService :  RepositoryFactory
     {
         #region 获取数据
         public async Task<List<BankEntity>> GetList(BankListParam param)
@@ -30,7 +33,7 @@ namespace TestCenter.Service
         public async Task<List<BankEntity>> GetPageList(BankListParam param, Pagination pagination)
         {
             var expression = ListFilter(param);
-            var list = await this.BaseRepository().FindList(expression, pagination);
+            var list= await this.BaseRepository().FindList(expression, pagination);
             return list.ToList();
         }
 
@@ -50,7 +53,7 @@ namespace TestCenter.Service
             }
             else
             {
-
+                
                 await this.BaseRepository().Update(entity);
             }
         }

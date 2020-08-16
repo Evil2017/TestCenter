@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "TestResultSend";
+}
+<script src="~/content/js/My97DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+    .panel-body {
+        background-color: #fff !important;
+    }
+</style>
+<div data-options="region:'center'" style="padding:10px; ">
+    <table id="jyjl" fit="true"></table>
+    <div style="background-color:#fff; padding:5px 0px 5px 5px;" id="seachtoolwx">
+        <span style="padding-bottom:10px">
+            &nbsp;&nbsp; 酶标版号：
+            <span class="color1" tag="DonorID">2</span>
+            &nbsp;&nbsp;
+            创建时间：
+            <span class="color1" tag="DonorName"></span>
+        </span>
+        <div style="width:99%;padding-bottom:10px;padding-top:10px">
+            <hr style="height:1px; color:#ccc" />
+        </div>
+        <span style="padding-top:10px">
+            <label>发布医生：</label>
+            <input type="text" name="Sendoctor" class="dm-input1" style="width:80px" id="Sendoctor" onfocus="UserSign(this.id,'操作员签名','Test','0')">
+      
+
+            <input type="hidden" ID="FID" name="FID" />
+            <label>审核医生</label>
+            <input type="text" name="ResSendDoctor" class="dm-input1" style="width:80px" id="ResSendDoctor" onfocus="UserSign(this.id,'复核人签名','Test','6')">
+        
+            <input type="hidden" ID="SHFID" name="SHFID" />
+            &nbsp;&nbsp;
+            <label>发布时间</label>
+            <input type="text" name="Stime" id="STime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="Wdate"  value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")">
+            <button class="dm-btn-ck" onclick="testSencCheck()" type="button">发布</button>
+            <button class="dm-btn-ck" onclick="dbgridRefs()" type="button">刷新</button>
+            </span>
+        <div style="width:99%;padding-top:10px">
+            <hr style="height:1px; color:#ccc" />
+        </div>
+</div>
+</div>

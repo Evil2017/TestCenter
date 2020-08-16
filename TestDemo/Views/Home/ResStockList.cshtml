@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "ResStockList";
+       string restype = "2";
+    string resname = "物料";
+    switch (restype)
+    {
+        case "1":
+            resname = "耗材";
+            break;
+        case "2":
+            resname = "试剂";
+            break;
+        case "3":
+            resname = "辅材";
+            break;
+        case "4":
+            resname = "疫苗";
+            break;
+        case "5":
+            resname = "办公用品";
+            break;
+
+        default:
+            break;
+    }
+}
+ <style type="text/css">
+    .panel-body{
+        background-color: #fff;
+        border:none;
+    }
+</style>
+<div data-options="region:'center'">
+    <table id="jyjl" fit="true"></table>
+    <div style="background-color:#fff; padding:5px 0px 5px 5px;" id="seachtoolwx">
+        &nbsp;&nbsp;
+        <label>起始时间：</label>
+        <input type="text" name="Stime" id="Stime" class="easyui-datebox">
+        <label>到</label>
+        <input type="text" name="Etime" id="Etime" class="easyui-datebox">
+         &nbsp;&nbsp;
+        <label>材料名称</label>
+          <input type="text" class="dm-input1" ID="ResName"onkeydown="OK()" />
+
+
+        <button class="dm-btn-ck" onclick="Search()" type="button">搜索</button>
+        <button class="dm-btn-ck" onclick="out()" type="button">导出</button>
+
+    </div>
+</div>
+<script>
+    $(function () { init();});
+
+    function init()
+    {
+        $('#jyjl').datagrid({
+            url: "",
+            queryParams: {  },
+            toolbar: '#seachtoolwx',
+            onDblClickRow: function (index, row) {   },
+            fit: true,
+            columns: [[
+                    { field: 'ResName', title: '单位', width: 130 },
+                    { field: 'DW', title: '单位', width: 130 },
+                    { field: 'InNum', title: '入库数量', width: 70 },
+                    { field: 'OutNum', title: '出库数量', width: 50 },
+                    { field: 'StockNum', title: '当前库存', width: 50 },
+                    {
+                        field: 'SmallStockNum', title: '领用结余', width: 110, formatter: function (i, r) {
+                            var a = '2';
+                            if (a == "1") { return r.SmallStockNum; } else { return '';}
+
+                        }
+                    },
+                    {
+                        field: 'opts', title: '操作', width: 180, formatter: function (i, r) {
+                        return '<a href="#" onclick="aa(\'' + r.ResName + '\',\'' + r.DW + '\')">入库详情</a>&nbsp;&nbsp;';
+                    }},
+
+
+                    //{ field: 'opts', title: '操作', width: 50 },
+
+            ]]
+        });
+    }
+
+
+</script>

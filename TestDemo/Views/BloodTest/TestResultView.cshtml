@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "TestResultView";
+    //string isThird = VILNKCtr.VILNKCtr.getBankConfig("第三方数据源").ToString(); //上林
+    //string bankid = VilnkDAL.OAFunction.GetBankConfig().BankID;
+}
+<style type="text/css">
+    .dm-td2 {
+        text-align: right;
+    }
+</style>
+<div class="dm-zl-box" id="SearchPanel">
+    <div class="dm-ti1">
+        <b>献浆员体检</b>
+    </div>
+    <div class="dm-xx-ti">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="dm-td2">酶标版号码：</td>
+                <td>
+                    <input type="text" class="dm-input1" ID="DonorID" tag="DonorID" value="" style="font-weight:bold" />
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td2" valign="top">请选择要发布的项目：</td>
+                <td>
+                    <table border="0" width="100%" cellspacing="0" cellpadding="0" style="margin-top:8px; margin-left:20px;">
+                        <tr>
+                            <td width="200">
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="12" checked="checked" />
+                                    ALT检验结果
+                                </label>
+                            </td>
+                            <td>
+                                <label style=" ">
+                                    <input type="checkbox" name="TestItem" value="51" checked="checked" />
+                                    血浆蛋白含量检验结果
+                                </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="14" checked="checked" />
+                                    HCV抗体检验结果
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="15" checked="checked" />
+                                    HIV 1/HIV 2抗体检验结果
+                                </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="16" checked="checked" />
+                                    梅毒检验结果
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="13" checked="checked" />
+                                    HBsAg检验结果
+                                </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="10" />
+                                    血型检查结果（此为初次献浆员单独发布）
+                                </label>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="48" />
+                                    狂犬病毒抗体检验
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="47" />
+                                    乙肝病毒表面抗体检验
+                                </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="TestItem" value="52" />
+                                    破伤风抗体检验
+                                </label>
+                            </td>
+                            <td>
+                                <label style="display:none">
+                                    <input type="checkbox" name="TestItem" value="12" />
+                                    血清蛋白含量检验结果
+                                </label>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="dm-td2"></td>
+                <td>
+                    <button class="dm-btn-ck" onclick="TestResultSend()">开始发布</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    function TestResultSend() {
+        var allSelect = "";
+        var selectItem = $("input:checkbox[name='TestItem']:checked").each(function () { // 遍历name=test的多选框
+            $(this).val();  // 每一个被选中项的值
+            if (allSelect == "") {
+                allSelect = $(this).val();
+            }
+            else {
+                allSelect = allSelect + "," + $(this).val();
+            }
+        });
+        var BoardNO = "2";
+
+        get("/BloodTest/TestResultInit",
+            {
+                BoardNO: BoardNO,
+                TestItems: allSelect
+            },
+            function (msg) {
+
+                location = "/BloodTest/TestResultSend?BoardNo=" + BoardNO + "&ItemID=" + allSelect + "";
+
+            },
+            function (msg) { });
+    }
+</script>

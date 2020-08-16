@@ -1,0 +1,803 @@
+﻿
+@{
+    ViewBag.Title = "中心实验室";
+    string wurl = "/dashboard/index";
+
+
+}
+<script src="/easyui/menu.js?v=578"></script>
+<script type="text/javascript">
+    var menobj=@Html.Raw(ViewBag.menujson);
+    var query = 0;
+    var result = [];
+    var demo = null;
+    $(function () {
+        $('#layoutbody').layout('hidden', 'west');
+        var msg = "@ViewBag.PwdChangeMsg";
+        if (msg != "") {
+            errmsg(msg)
+        }
+        createPanel(2, '@wurl');
+
+    });
+
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    connection.on("ReceiveMessage", function (user, message) {
+        layer.open({
+            shade: false,
+            type: 0,
+            title: user+'--异常警告通知',
+            content: message,
+            offset: 'rb',
+            time: 6000,
+            anim: 6,
+            area: ['350px', '200px'],
+            icon: 0,
+            shadeClose: true,
+            btn: ['查看', '关闭'],
+            yes: function (index, layero) {
+                addTab("异常", '/Exceptions/Index');
+
+                //更新消息表状态
+            }
+        });
+        $('#tab').datagrid('reload', queryParams());
+    });
+
+    connection.start().then(function () {
+        console.log("SignalR启动成功");
+        $.ajax({
+            async: true,
+            dataType: "json",
+            type: "post",
+            url: "/Exceptions/Check",
+            data: { msg: "我是参数" },
+            success: function (res) {
+                console.log(res);
+            }
+        });
+    }).catch(function (err) {
+        setInterval(function () { FnCreate(1) }, 1000 * 10);
+        return console.error(err.toString());
+    });
+
+
+
+//异常
+
+    var isshow = true;
+    function FnCreate(s) {
+        $.ajax({
+            async: true,
+            dataType: "json",
+            type: "post",
+            url: "/Exceptions/Create",
+            data: { type: s },
+            success: function (res) {
+                if (isshow||res.data > 0)
+                {
+                    isshow = false;
+                    layer.open({
+                        shade: false,
+                        type: 0,
+                        title: '异常警告通知',
+                        content: res.msg,
+                        offset: 'rb',
+                        time: 6000,
+                        anim: 6,
+                        area: ['350px', '200px'],
+                        icon: 0,
+                        shadeClose: true,
+                        btn: ['查看', '关闭'],
+                        yes: function (index, layero) {
+                            addTab("异常", '/Exceptions/Index');
+
+                            //更新消息表状态
+                        }
+                    });
+
+                }
+               // $('#tab').datagrid('reload', queryParams());
+            }
+        });
+    };
+
+    window.onerror = handleError
+    function handleError(msg,url,l)
+    {
+        var txt="页面执行错误.\n\n"
+        txt+="错误内容: " + msg + "\n"
+        txt+="URL: " + url + "\n"
+        txt+="行数: " + l + "\n\n"
+        errmsg(txt)
+        return true
+    }
+
+    function setmenut() {
+        $("#headmenu li:first").addClass("active");
+        demo.treeData = menobj[0].children;
+        $("#headmenu li").unbind();
+        $("#headmenu li").click(function () {
+            $(this).addClass('active')
+            $(this).siblings().removeClass('active');
+            var i = $(this).index();
+
+            if (menobj[i].children.length > 0) {
+                demo.treeData = menobj[i].children;
+                var obj0=menobj[i].children[0];
+                var fl = true;
+                while (fl) {
+                    if (obj0.children.length > 0) {
+                        obj0 = obj0.children[0];
+                    } else {
+                        obj0 = obj0;
+                        fl = false;
+                    }
+                }
+                if (obj0.attributes.URL == '#' || obj0.attributes.URL == ''|| obj0.attributes.URL == null ) {
+                    successmsg("正在开发。。。");
+                }else{
+                    addTab(obj0.text, obj0.attributes.URL);
+                }
+                $('#layoutbody').layout('show', 'west');
+                return;
+            } else {
+
+                if (menobj[i].attributes.URL == '#' || menobj[i].attributes.URL == ''|| menobj[i].attributes.URL == null ) {
+                    successmsg("正在开发。。。");
+                } else {
+                    if (menobj[i].attributes.OpenType == 2) {
+
+                        createPanel(2, menobj[i].attributes.URL)
+
+                    } else {
+                        addTab(menobj[i].text, menobj[i].attributes.URL);
+                    }
+
+                    $('#layoutbody').layout('hidden', 'west');
+                    return;
+                }
+            }
+
+        });
+    }
+    var loadindex = -1;
+    var loadindex = -1;
+    $(function () {
+
+        //var iframe = $("#contentIfr");
+        //var  height=iframe.parent().height();
+        //iframe.height(height);
+
+        //var iframe11 = document.getElementById("contentIfr");
+        //iframe11.onload = function () {
+        //    layer.close(loadindex);
+        //};
+
+    })
+    //客户端操作后回调
+    function CallBack(DataStr)
+    {
+        exiffun("CallBack",DataStr);
+        // alert(DataStr);
+    }
+    // 动态调用子页面方法
+    function changeTabsTitle(tt){
+        $("#tabs .tabs-selected .tabs-title").text(tt);
+    }
+</script>
+<style>
+    .layui-layer-loading .layui-layer-content {
+        width: 367px;
+        height: 64px;
+        background: none !important;
+    }
+
+    .layout-panel-west {
+        left: 0px !important;
+    }
+</style>
+<style type="text/css">
+    body, html {
+        height: 100%;
+        background: #F2F2F2;
+        overflow: hidden;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font: 14px "微软雅黑", "FontAwesome", "Arial Narrow", HELVETICA;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+    /* navMenu */
+    .navMenubox {
+        overflow: hidden;
+        padding-top: 8px;
+    }
+
+    .navMenu-top {
+        padding: 10px;
+        color: #fff;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .navMenu > li {
+        display: block;
+        margin: 0;
+        padding: 0;
+        border: 0px;
+    }
+
+        .navMenu > li > a {
+            display: block;
+            overflow: hidden;
+            padding-left: 13px;
+            line-height: 50px;
+            color: #333;
+            transition: all .3s;
+            position: relative;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+            /*background:url(content/images/menu_ico.png) no-repeat 5px center;*/
+        }
+
+        .navMenu > li:nth-of-type(1) > a {
+            border-top: 1px solid #ddd;
+        }
+
+        .navMenu > li:last-child > a {
+        }
+
+        .navMenu > li > a > i {
+            font-size: 20px;
+            float: left;
+            font-style: normal;
+            margin: 0 5px;
+        }
+
+    .navMenu li a .arrow:before {
+        display: block;
+        float: right;
+        margin-top: 1px;
+        margin-right: 15px;
+        display: inline;
+        font-size: 16px;
+        font-family: FontAwesome;
+        height: auto;
+        content: "\f105";
+        font-weight: 300;
+        text-shadow: none;
+    }
+
+    .navMenu li a .arrow.open:before {
+        float: right;
+        margin-top: 1px;
+        margin-right: 15px;
+        display: inline;
+        font-family: FontAwesome;
+        height: auto;
+        font-size: 16px;
+        content: "\f107";
+        font-weight: 300;
+        text-shadow: none;
+    }
+
+    .navMenu > li > a.active, .navMenu > li > a:hover {
+        color: #0FA0D5;
+        background: #f2f2f2;
+        border-left: 3px solid #0FA0D5;
+    }
+
+    .navMenu > li > ul.sub-menu {
+        display: none;
+        list-style: none;
+        clear: both;
+        margin: 0px 0px 0px 0px;
+        padding-bottom: 5px;
+        background-color: #e7e7e7;
+        padding-left: 0px;
+        padding-top: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .navMenu > li > ul.sub-menu > li > ul.sub-menu {
+            display: none;
+            list-style: none;
+            clear: both;
+            margin: 0px 0px 0px 0px;
+            padding-bottom: 5px;
+            background-color: #e7e7e7;
+            padding-left: 10px;
+            padding-top: 8px;
+        }
+
+        .navMenu > li.active > ul.sub-menu, .navMenu > li > ul.sub-menu > li.active > ul.sub-menu {
+        }
+
+        .navMenu > li > ul.sub-menu li {
+            background: none;
+            margin: 0px;
+            padding: 0px;
+            border-bottom: 0px solid #eee;
+        }
+
+            .navMenu > li > ul.sub-menu li > ul.sub-menu li {
+                background: none;
+                margin: 0px;
+                padding: 0px;
+                background-color: transparent;
+                border-bottom: 0px;
+            }
+
+            .navMenu > li > ul.sub-menu li > a {
+                display: block;
+                font-size: 14px;
+                line-height: 40px;
+                padding-left: 20px;
+                color: #333;
+                clear: both;
+            }
+
+                .navMenu > li > ul.sub-menu li > a.active, .navMenu > li > ul.sub-menu li > a:hover, .navMenu > li > ul.sub-menu > li.active > a {
+                    color: #FFF;
+                    background: #1D79A2;
+                }
+
+            .navMenu > li > ul.sub-menu li > ul.sub-menu li > a {
+                padding-left: 20px !important;
+            }
+
+            .navMenu > li > ul.sub-menu li > ul.sub-menu li > ul.sub-menu li > a {
+                padding-left: 35px !important;
+                color: #666;
+            }
+
+    .icon_1:before {
+        content: "\f0ac";
+    }
+
+    .icon_2:before {
+        content: "\f0ac";
+    }
+
+    .icon_3:before {
+        content: "\f0ac";
+    }
+
+    .dm-top1 {
+        background-color: #298CEF;
+        width: 100%;
+        height: 60px;
+    }
+
+    .dm-name, .dm-sz {
+        float: left;
+    }
+
+        .dm-sz li {
+            float: left;
+        }
+
+    .dm-xtcd {
+        background-color: #393D49;
+        height: 40px;
+        line-height: 40px;
+        color: #fff;
+        font-size: 15px;
+        padding-left: 10px;
+    }
+    /*.navMenu li:first-child a:first-child
+    {
+    background-color:#1AA0D7;
+
+    }
+    .navMenu li:first-child a{
+        color: #fff;
+    }*/
+    .dm-top-right {
+        font-size: 14px;
+        /*position: fixed;*/
+        right: 0px;
+        top: 0px;
+    }
+
+    .w60 {
+        width: auto;
+        margin-right: 5px;
+    }
+
+    .top-right1 {
+        padding-top: 15px;
+    }
+
+    .top-right2 {
+        padding-top: 8px;
+    }
+
+    .dm-logo img {
+        padding-top: 12px;
+        width: 48px;
+        height: 48px;
+    }
+
+    .dm-logo {
+        font-size: 40px;
+        height: 75px;
+        line-height: 66px;
+        letter-spacing: 5px;
+    }
+
+    #divNav span {
+        cursor: pointer;
+    }
+
+    .layui-layer-loading .layui-layer-content {
+        width: 367px;
+        height: 64px;
+        background: none !important;
+    }
+
+    .dm-top-right {
+        margin-top: 0px;
+        border-left: 1px solid #ddd;
+        height: 60px;
+        width: 110px;
+    }
+
+    .tabs-with-icon {
+        padding-left: 0px !important;
+    }
+
+    .layout-panel-center {
+        margin-top: 0px;
+    }
+
+    .layout-panel-west {
+        margin-top: 0px;
+    }
+
+    .layout-panel-south {
+        display: none !important;
+    }
+
+    .panel-tool {
+        top: 35%;
+    }
+
+    .layout-expand .panel-header {
+        background-color: #f5f5f5;
+    }
+
+    .logo-1 {
+        font-size: 26px;
+        letter-spacing: 3px;
+    }
+
+    .sy-tc {
+        /*float: right;*/
+        padding-left: 10px;
+        padding-top: 6px;
+    }
+
+    .dm-bbh {
+        position: absolute;
+        top: 25px;
+        left: 205px;
+    }
+
+    .layout-panel-west .panel-header, .layout-panel-west .panel-title {
+        height: 28px !important;
+        line-height: 28px !important;
+    }
+</style>
+<div class="myhome-z" style="display:none;">
+    <ul>
+
+        <li onclick="grsz()">
+            <a href="#">个人设置</a>
+        </li>
+        <li>
+            <a href="#" onclick="loginout()">退出系统</a>
+        </li>
+    </ul>
+</div>
+<div data-options="region:'north',border:false,height:60" style="overflow:hidden" class="header">
+    <div class="dm-top">
+        <div class="">
+            <hgroup id="heading" class="logo-1">
+                单采血浆站-中心实验室
+            </hgroup>
+            @*<div class="dm-bbh">版本号：<span>V1.0</span></div>*@
+            <nav id="navbar">
+                <div class="dm-top-right">
+
+                    <div class="sy-tc sy-txxx">
+                        @*<span style="display: block;float: left;padding-top: 0px;width: 36px;border-radius: 100%;overflow: hidden;padding-right: 0px;margin-right: 5px;margin-top: 5px;">
+                            <img src="/images/tx.png" width="36" />
+                            </span>*@
+                        <span class="top-right1">
+                            @Context.User.Identity.Name&nbsp;欢迎
+                            @*| 在线用户:
+                                <span id="Online">1</span>*@
+                        </span>
+                        @*<div class="top-right2">
+                                <div class="w60" onclick="changepwd()" id="fullScreen">
+                                    <i class="fa fa-lock"></i>
+                                    密码
+                                </div>
+                                <div class="w60" onclick="Logout()">
+                                    <i class="fa fa-power-off"></i>
+                                    退出
+                                </div>
+                            </div>*@
+                    </div>
+
+                </div>
+                <ul class="nav nav-default" id="headmenu">
+                    <template v-for="item in items">
+                        <li v-bind:data-url="item.attributes.URL" v-bind:data-id="item.id" v-bind:data-opentype="item.attributes.OpenType">
+
+                            <a href="#" class="active">
+                                <span class="h-ico">
+                                    <img v-bind:src="item.attributes.ICON" width="20">
+                                </span>
+                                <span>{{item.text}}</span>
+                            </a>
+
+                        </li>
+                    </template>
+
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+</div>
+<div id="left" data-options="region:'west',split:true,title:'导航菜单'" style="width:160px; border-bottom:1px solid #ccc;overflow-x: hidden;">
+    <div class="navMenubox">
+        <div id="slimtest1">
+            <ul id="demo" class="navMenu">
+                <item v-for='model in treeData' v-bind:model='model' v-bind:key="model.id"></item>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="main" div data-options="region:'center'" style="background: #eee; overflow-y: hidden;">
+</div>
+<div id="mm" class="easyui-menu" style="width: 150px; display: none">
+    <div id="mm-tabupdate">刷新</div>
+    <div class="menu-sep"></div>
+    <div id="mm-tabclose">关闭</div>
+    <div id="mm-tabcloseall">全部关闭</div>
+    <div id="mm-tabcloseother">除此之外全部关闭</div>
+    <div class="menu-sep"></div>
+    <div id="mm-tabcloseright">当前页右侧全部关闭</div>
+    <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
+    <div class="menu-sep"></div>
+    <div id="mm-exit">退出</div>
+</div>
+<template id="item-template">
+    <li>
+        <a v-on:click="clickfun" v-bind:data-id="model.id" v-bind:data-url="model.attributes.URL" v-bind:data-width="model.attributes.width" v-bind:data-height="model.attributes.height" v-bind:data-title='model.text' v-bind:data-opentype="model.attributes.OpenType" href="javascript:;" class="afinve">
+            <!--<i class="icon_1"></i>
+            -->
+            <span class="h-ico" v-if="model.attributes.ICON!=null&&model.attributes.ICON!=''">
+                <img v-bind:src="model.attributes.ICON" width="16">
+            </span>
+            <span class="">{{model.text}}</span>
+            <span v-if='model.children.length>0' class="arrow"></span>
+        </a>
+        <ul class="sub-menu" v-if="model.children.length>
+        0">
+            <item class="item" v-for="cel in model.children" v-bind:model="cel"></item>
+
+        </ul>
+    </li>
+</template>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.sy-txxx').hover(function () {
+            $(".myhome-z").css('display', 'block');
+        }, function () {
+            $(".myhome-z").css('display', 'none');
+        });
+
+        $(".myhome-z").hover(function () {
+            $(this).css('display', 'block');;
+        }, function () {
+            $(this).css('display', 'none');
+        });
+        //var bb = $("#tabs").tabs("options");
+
+        //createPanel();
+        //$.parser.parse();
+    })
+</script>
+<script type="text/javascript">
+
+    function createPanel(pp, url) {
+        $("#main").empty();
+        if (pp == 2) {
+            var h = $("#main").height(); var w = $("#main").width();
+            $("<iframe scrolling='auto' allowfullscreen='true' align='ceter' frameborder='0' src='" + url + "' style='height:" + h + "px;width:" + w + "px'></iframe>").appendTo($("#main"));
+        } else {
+            $('<div class="easyui-tabs" id="tabs" data-options="fit:true,border:false"></div> ').appendTo($("#main")).css('display', 'block');
+        }
+    }
+    function closeThisTab(title, refs, fun, args) {
+        var tab = $('#tabs').tabs('getSelected');
+        var i = $('#tabs').tabs('getTabIndex', tab);
+        $('#tabs').tabs('close', i);
+        if (refs) {
+            if (title != '' && typeof (title) != "undefined") {
+                TabFnSearch(title, fun, args);
+            }
+        }
+    }
+    function closeTab(title) {
+        $('#tabs').tabs('close', title);
+    }
+    function TabFnSearch(title, fun, args) {
+        var tab = $('#tabs').tabs('getTab', title);
+        var i = $('#tabs').tabs('getTabIndex', tab);
+        if (fun != '' && typeof (fun) != "undefined") {
+            $("#tabs .panel-body:eq(" + i + ") iframe")[0].contentWindow.dynamic(fn, args);;
+        } else {
+            $("#tabs .panel-body:eq(" + i + ") iframe").contents().find("#FnSearch_btn").trigger("click");
+        }
+        $('#tabs').tabs('select', title);
+    }
+
+    function menuclick(p) {
+        var url = $(p).data('url');
+        if (url == undefined) {
+        } else if (url == null || url == '#' || url == '') {
+        } else {
+            var menuid = $("#file_menuid").val();
+            $("#divNav").empty();
+            addTab($(p).data('title'), url);
+
+            $('.active.afinve').removeClass('active');
+            $(p).addClass("active");
+            return false;
+        }
+        var parent = $(p).parent().parent();//获取当前页签的父级的父级
+        var labeul = $(p).parent("li").find(">ul")
+        if ($(p).parent().hasClass('open') == false) {
+            //展开未展开
+            parent.find('ul').slideUp(300);
+            parent.find("li").removeClass("open")
+            parent.find('li a').removeClass("active").find(".arrow").removeClass("open")
+            $(p).parent("li").addClass("open").find(labeul).slideDown(300);
+            $(p).addClass("active").find(".arrow").addClass("open");
+            return false;
+        } else {
+            $(p).parent("li").removeClass("open").find(labeul).slideUp(300);
+            if ($(p).parent().find("ul").length > 0) {
+                $(p).removeClass("active").find(".arrow").removeClass("open")
+            } else {
+                $(p).addClass("active")
+            }
+            return false;
+        }
+
+    }
+    function open_nav() {
+        //	alert('')
+        $('.navMenu li:first').addClass("open");
+        if ($(".navMenu li:first ul").length > 0) {
+            $(".navMenu li:first ul li:first a:first").addClass("active");
+            $(".navMenu li:first ul").show();
+        } else {
+            $(".navMenu li:first a:first").addClass("active");
+        }
+
+    }
+    Vue.component('item', {
+        template: '#item-template',
+        props: {
+            model: Object
+        },
+        methods: {
+
+            clickfun: function (e) {
+                var target = null;
+                var ll = $(e.target).parent("a").length;
+                if (ll == 0) {
+                    target = e.target;
+                } else {
+                    target = $(e.target).parent("a")
+                }
+                menuclick(target)
+                // e.target 是你当前点击的元素
+                // e.currentTarget 是你绑定事件的元素
+            }
+        }
+    })
+    demo = new Vue({
+        el: '#demo',
+        data: {
+            treeData: []
+        }, updated: function () {
+            open_nav();
+        }
+    })
+    new Vue({
+        el: '#headmenu',
+        data: {
+            items: menobj
+        }, methods: {
+
+        }, mounted: function () {
+            setmenut();
+
+        }
+    });
+    function FnSearch() {
+        setTimeout(function () {
+            try {
+                // 执行当前页面的搜索
+                $("#tabs .panel-body:visible iframe").contents().find("#FnSearch_btn").trigger("click");
+            } catch (e) {
+
+            }
+        }, 300);
+    }
+    function FnSearchfun(fun) {
+        setTimeout(function () {
+            try {
+                // 执行当前页面的搜索
+                $("#tabs .panel-body:visible iframe").contents().find("#" + fun + "").trigger("click");
+            } catch (e) {
+
+            }
+        }, 300);
+    }
+    // 动态调用子页面方法
+    function exiffun(fn, args) {
+        $("#tabs .panel-body:visible iframe")[0].contentWindow.dynamic(fn, args);
+    }
+
+    function changepwd() {
+        // changeTabstiel();
+        //  completeLock();//
+        parent.layerView("个人设置", "/Manage/UserInfo?UserAccountID=", 500, 500);
+    }
+
+    function grsz() {
+        layer.open({
+            type: 2,
+            title: '加密锁密码修改',
+            area: ['500px', '500px'],
+            shade: [0.8, '#393D49'],
+            content: '/Manage/UserInfo?ID=',
+            //btn: ["保存", "取消"],
+        });
+    }
+
+    function loginout() {
+        $.messager.confirm('退出提示', '您确定要退出系统吗？', function (index) {
+            if (index) {
+                location.href = '/Login/Logout';
+            }
+        });
+
+
+
+    }
+</script>

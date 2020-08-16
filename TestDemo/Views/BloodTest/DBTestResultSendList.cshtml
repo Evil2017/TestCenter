@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "DBTestResultSendList";
+}
+
+
+<style type="text/css">
+    .panel-body {
+        background-color: #fff;
+        border-top: none;
+
+    }
+     .datagrid-view {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+    }
+</style>
+<div data-options="region:'center'">
+<table id="jyjl" fit="true"></table>
+<div style="padding:5px" id="seachtoolwx">
+     <label>检测批次：</label>
+                    <input type="text" name="boardNO" id="boardNO" class="dm-input1" style="width:80px"onkeydown="OK()">
+    &nbsp;&nbsp;
+    <label>检测时间：</label>
+    <input type="text" name="Stime" id="Stime" class="easyui-datebox">
+    <label>到</label>
+    <input type="text" name="Etime" id="Etime" class="easyui-datebox">
+    &nbsp;&nbsp;
+    <label>档案编号：</label>
+    <input type="text" name="DonorIDs" id="DonorIDs" class="easyui-textbox dm-input5"onkeydown="OK()">
+    &nbsp;&nbsp;
+    <label>姓名：</label>
+    <input type="text" name="DonorName" id="DonorName" class="dm-input1" style="width:70px;"onkeydown="OK()">
+    &nbsp;&nbsp;
+   
+          @* <label>版位置：</label>
+                    <input type="text" name="Place" id="Place" class="dm-input1" style="width:80px">
+              *@
+   <button class="dm-btn-ck" type="button" id="sousuo" onclick="Search()">搜索</button>
+     @*<button class="dm-btn-ck" onclick="TestResultInit()" type="button">发布总蛋白</button>*@
+      <button class="dm-btn-ck" onclick="PrintData()" type="button">打印</button>
+</div>
+</div>
+
+<script>
+    function init() {
+        $('#jyjl').datagrid({
+            url: "/BloodTest/GetDBTestResultSendList",
+            queryParams: {},
+            toolbar: '#seachtoolwx',
+            onDblClickRow: function (index, row) { },
+            onLoadSuccess: function (data) {
+
+            },
+            rowStyler:function(index,row){  
+                if (row.DBHL >= 50 && row.DBHL <= 100) {
+                    return 'color:green;font-weight:bold;';
+                } else if (row.DBHL > 100) {
+                    return 'color:#b266ff;font-weight:bold;';
+                } else {
+                    return 'color:red;font-weight:bold;';
+                }
+            } , 
+            fit: true,
+            columns: [[
+                    { field: 'DonorID', title: '档案编号', width: 125, formatter: DonorInfo_view, align: 'center' },
+                   { field: 'DonorName', title: '姓名', width: 70, align: 'center' },
+                    { field: 'Gender', title: '性别', width: 40, align: 'center' },
+                     { field: 'sDonateID', title: '登记号', width: 60, align: 'center' },
+
+                      { field: 'DonateID', title: '登记号', width: 100, align: 'center', hidden: true },
+                        { field: 'SampleType', title: '标本类型', width: 60, align: 'center' },
+
+                    { field: 'DBHL', title: '发布结果', width: 60, align: 'center' },
+                    { field: 'opr', title: '发布结论', width: 60, align: 'center',formatter:cellColor },
+
+                    { field: 'SPRDate', title: '发布时间', width: 150, align: 'center' },
+                      { field: 'SPRDoctor', title: '发布人', width: 60, align: 'center' },
+                            {
+                                field: 'dd', title: '操作', width: 50, align: "center", formatter: function (val, row, index) {
+                                    var h = '';
+                                    h += ' <a href="javascript:void(0)" onclick="UpdatDB(\'' + row.DonorID + '\',\'' + row.DonorName + '\',\'' + row.sDonateID + '\',\'' + row.DonateID + '\',\'' + row.DBHL + '\',\'' + row.SampleType + '\')">修改</a>';
+                                    return h;
+                                }
+                            },
+            ]]
+        });
+    }
+    init();
+
+    function Search() {
+        // alert("555");
+        $('#jyjl').datagrid("reload", { boardNO: $("#boardNO").val(), Stime: $("#Stime").val(), Etime: $("#Etime").val(), DonorIDs: $("#DonorIDs").val(), DonorName: $("#DonorName").val() });
+        // pdjs(i);
+    }
+    function OK() {
+        if (event.keyCode == 13) { Search(); }
+    }
+    //修改
+    function UpdatDB(DonorID, DonorName, sDonateID, DonateID, DBHL, SampleType) {
+        layer.open({
+            type: 2,
+            title: '修改总蛋白数值',
+            area: ['550px', '180px'],
+            shade: [0.8, '#393D49'],
+            //content: href = '/BloodTest/UpdateDBTestResult?DonorID=' + DonorID,//修改资料
+            content: href = '/BloodTest/UpdateDBTestResult?DonorID=' + DonorID + '&DonorName=' + DonorName + '&sDonateID=' + sDonateID + '&DonateID=' + DonateID + '&DBHL=' + DBHL + '&SampleType=' + SampleType + ''
+        });
+
+    }
+
+
+    function cellColor(value, row, index) {
+        var dbhls = row.DBHL;
+
+        if (dbhls < 50 || dbhls == "" || dbhls == null) {
+            return '<sapn style="color:red;">不合格 </sapn>';////background-color:#red;color:red;'
+        } else if (dbhls >= 100) {
+
+            return '<sapn style="color: #b266ff;">合格 </sapn>';
+        }
+        else {
+            return '<sapn style="color:green;">合格 </sapn>';
+        }
+        //if (value == "合格") {
+
+        //}
+    }
+    function PrintData(i) {
+        ////  alert("22");
+        var boardNO = $("#boardNO").val();
+
+        if (boardNO != "") {
+            $.ajax({
+                url: "/BloodTest/PrintBoard_DB",
+                type: "post",
+                data: { BoardNo: boardNO },
+                success: function (msg) {
+                    Vilnkprint(msg);
+                }
+            });
+        }
+        else {
+            errmsg("请输入要打印的版号");
+        }
+    }
+
+
+
+</script>
+@*<script defer="defer">
+    Search();
+</script>*@

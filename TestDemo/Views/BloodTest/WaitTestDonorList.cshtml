@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "WaitTestDonorList";
+}
+
+
+<style type="text/css">
+    .panel-body {
+        background-color: #fff !important;
+    }
+</style>
+<div data-options="region:'center'" style="padding:10px; ">
+    <table id="jyjl" fit="true"></table>
+    <div style="background-color:#fff; padding:5px 0px 5px 5px;" id="seachtoolwx">
+        @*&nbsp;&nbsp;
+        <label>登记日期：</label>
+        <input type="text" name="Stime" id="Stime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="easyui-datebox">
+        <label>到</label>
+        <input type="text" name="Etime" id="Etime" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="easyui-datebox">*@
+        &nbsp;&nbsp;
+        <label>档案编号：</label>
+        <input type="text" name="Q_DonorID" id="Q_DonorID" class="easyui-textbox"onkeydown="OK()">
+        <button class="dm-btn-ck" onclick="Search()" type="button">搜索</button>
+
+    </div>
+</div>
+
+<script>
+    init();
+
+
+    function init() {
+        $('#jyjl').datagrid({
+            url: "@Url.Action("GetWaitTestDonorList")",
+            queryParams: {},
+            toolbar: '#seachtoolwx',
+            onDblClickRow: function (index, row) { },
+            fit: true,
+            columns: [[
+                { field: 'SortID', title: '登记号', width: 90, align: "center" },
+                { field: 'DonorName', title: '姓名', width: 90, align: "center" },
+                { field: 'Gender', title: '性别', width: 60, align: "center" },
+                { field: 'DonorID', title: '档案编号', width: 120, align: "center", formatter: DonorInfo },
+                { field: 'Date', title: '排卡日期', width: 80, align: "center", formatter: formatYMD },
+                { field: 'CommAddress', title: '地址', width: 250, align: "left" },
+            ]]
+        });
+    }
+
+    function DonorInfo(val, row, index) {
+        refs = "<a href=\"/Donors/DonorInfo?DonorID=" + row.DonorID + "\"\">" + row.DonorID + "</a>"
+        return refs;
+    }
+
+    //刷新列表
+    function dbgridRefs() {
+        $('#jyjl').datagrid("reload");
+    }
+
+    function Search() {
+        //$('#jyjl').datagrid("reload", { DonorID: $("#Q_DonorID").val(), Stime: $("#Stime").val(), Etime: $("#Etime").val() });
+        $('#jyjl').datagrid("reload", { DonorID: $("#Q_DonorID").val()});
+    }
+    function OK() {
+        if (event.keyCode == 13) { Search(); }
+    }
+</script>

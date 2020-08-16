@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Dialog_ChangeBoardDail";
+}
+<style>
+    table tr {
+        height: 25px;
+    }
+</style>
+<table width="100%" style="padding-left:15px">
+    <tr>
+        <td align="right">酶标版号：</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td align="right">版位置：</td>
+        <td id="placePanel">2</td>
+    </tr> 
+    <tr>
+        <td align="right">版内容：</td>
+        <td>
+            <input type="text" id="DailValue" onfocus="this.select()" onkeydown="keyClick(ResultSave)"  style="width:120px;height:23px;font-weight:bold" />
+        </td>
+    </tr>
+    <tr>
+        <td align="right">连续录入方式：</td>
+        <td>
+            
+            <label><input type="radio" id="radH" value="1" name="rad" />横向</label>
+            <label><input type="radio" id="radV" value="0" name="rad" />竖向</label>
+            <label><input type="radio" id="radN" value="-1" name="rad"/>不连续</label>
+         </td>
+    </tr>
+    <tr>
+        <td align="right">填充孔数：</td>
+        <td>
+            <select id="CollNum" >
+                <option value="1">单孔</option>
+                <option value="2">双孔</option>
+                <option value="3">三孔</option>
+            </select> 
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <input type="button" value="保存" onclick="ResultSave()" />
+        </td>
+    </tr>
+</table>

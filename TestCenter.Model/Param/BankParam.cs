@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using TestCenter.Util;
 
-namespace TestCenter.Model.Param
+namespace TestCenter.Model.Param.TestManage
 {
     /// <summary>
     /// 创 建：admin

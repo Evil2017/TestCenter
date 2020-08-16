@@ -68,6 +68,8 @@
     <None Include="Areas\SystemManage\Views\Role\RoleForm.cshtml" />
     <None Include="Areas\SystemManage\Views\Role\RoleIndex.cshtml" />
     <None Include="Areas\SystemManage\_ViewImports.cshtml" />
+    <None Include="Areas\TestManage\Views\Bank\BankForm.cshtml" />
+    <None Include="Areas\TestManage\Views\Bank\BankIndex.cshtml" />
     <None Include="Areas\ToolManage\Views\CodeGenerator\CodeGeneratorEditList.cshtml" />
     <None Include="Areas\ToolManage\Views\CodeGenerator\CodeGeneratorEditSearch.cshtml" />
     <None Include="Areas\ToolManage\Views\CodeGenerator\CodeGeneratorEditToolbar.cshtml" />

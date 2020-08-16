@@ -1,6 +1,7 @@
-﻿@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment
+﻿
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment
 @{
-    ViewBag.Title = "血浆检测中心";
+    ViewBag.Title = "中心实验室管理系统";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     OperatorInfo operatorInfo = ViewBag.OperatorInfo;
@@ -14,28 +15,442 @@
         portrait = GlobalContext.SystemConfig.ApiSite + portrait;
     }
 }
-@BundlerHelper.Render(HostingEnvironment.ContentRootPath, Url.Content("~/yisha/js/yisha-data.min.js"))
+<script src="/easyui/menu.js?v=578"></script>
+<script type="text/javascript">    
+    var query = 0;
+    var result = [];
+    var demo = null;
+    $(function () {
+        $('#layoutbody').layout('hidden', 'west');
+        var msg = "@ViewBag.PwdChangeMsg";
+        if (msg != "") {
+            errmsg(msg)
+        }
+     
 
-<div id="wrapper">
-    <!--左侧导航开始-->
-    <nav class="navbar-default navbar-static-side" role="navigation">
-        <div class="nav-close">
-            <i class="fa fa-times-circle"></i>
-        </div>
-        <div class="sidebar-collapse">
-            <ul class="nav" id="side-menu">
-                <li class="logo">血浆检测中心</li>
-                <li class="nav-header">
-                    <div class="dropdown profile-element clear">
-                        <div class="image-left">
-                            <img alt="image" src='@portrait' class="img-circle" height="50" width="50" />
-                        </div>
-                        <div class="image-right">
-                            <span class="block m-t-xs">@operatorInfo.UserName</span>
-                            <span class="text-xs block">@operatorInfo.DepartmentName</span>
-                        </div>
+    });   
+
+    window.onerror = handleError
+    function handleError(msg,url,l)
+    {
+        var txt="页面执行错误.\n\n"
+        txt+="错误内容: " + msg + "\n"
+        txt+="URL: " + url + "\n"
+        txt+="行数: " + l + "\n\n"
+        errmsg(txt)
+        return true
+    }
+
+    var loadindex = -1;
+    var loadindex = -1;
+    $(function () {
+
+        //var iframe = $("#contentIfr");
+        //var  height=iframe.parent().height();
+        //iframe.height(height);
+
+        //var iframe11 = document.getElementById("contentIfr");
+        //iframe11.onload = function () {
+        //    layer.close(loadindex);
+        //};
+
+    })
+    //客户端操作后回调
+    function CallBack(DataStr)
+    {
+        exiffun("CallBack",DataStr);
+        // alert(DataStr);
+    }
+    // 动态调用子页面方法
+    function changeTabsTitle(tt){
+        $("#tabs .tabs-selected .tabs-title").text(tt);
+    }
+</script>
+<style>
+    .layui-layer-loading .layui-layer-content {
+        width: 367px;
+        height: 64px;
+        background: none !important;
+    }
+
+    .layout-panel-west {
+        left: 0px !important;
+    }
+</style>
+<style type="text/css">
+    body, html {
+        height: 100%;
+        background: #F2F2F2;
+        overflow: hidden;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font: 14px "微软雅黑", "FontAwesome", "Arial Narrow", HELVETICA;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+    /* navMenu */
+    .navMenubox {
+        overflow: hidden;
+        padding-top: 8px;
+    }
+
+    .navMenu-top {
+        padding: 10px;
+        color: #fff;
+        border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+
+    .navMenu > li {
+        display: block;
+        margin: 0;
+        padding: 0;
+        border: 0px;
+    }
+
+        .navMenu > li > a {
+            display: block;
+            overflow: hidden;
+            padding-left: 13px;
+            line-height: 50px;
+            color: #333;
+            transition: all .3s;
+            position: relative;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 1px solid #ddd;
+            /*background:url(content/images/menu_ico.png) no-repeat 5px center;*/
+        }
+
+        .navMenu > li:nth-of-type(1) > a {
+            border-top: 1px solid #ddd;
+        }
+
+        .navMenu > li:last-child > a {
+        }
+
+        .navMenu > li > a > i {
+            font-size: 20px;
+            float: left;
+            font-style: normal;
+            margin: 0 5px;
+        }
+
+    .navMenu li a .arrow:before {
+        display: block;
+        float: right;
+        margin-top: 1px;
+        margin-right: 15px;
+        display: inline;
+        font-size: 16px;
+        font-family: FontAwesome;
+        height: auto;
+        content: "\f105";
+        font-weight: 300;
+        text-shadow: none;
+    }
+
+    .navMenu li a .arrow.open:before {
+        float: right;
+        margin-top: 1px;
+        margin-right: 15px;
+        display: inline;
+        font-family: FontAwesome;
+        height: auto;
+        font-size: 16px;
+        content: "\f107";
+        font-weight: 300;
+        text-shadow: none;
+    }
+
+    .navMenu > li > a.active, .navMenu > li > a:hover {
+        color: #0FA0D5;
+        background: #f2f2f2;
+        border-left: 3px solid #0FA0D5;
+    }
+
+    .navMenu > li > ul.sub-menu {
+        display: none;
+        list-style: none;
+        clear: both;
+        margin: 0px 0px 0px 0px;
+        padding-bottom: 5px;
+        background-color: #e7e7e7;
+        padding-left: 0px;
+        padding-top: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .navMenu > li > ul.sub-menu > li > ul.sub-menu {
+            display: none;
+            list-style: none;
+            clear: both;
+            margin: 0px 0px 0px 0px;
+            padding-bottom: 5px;
+            background-color: #e7e7e7;
+            padding-left: 10px;
+            padding-top: 8px;
+        }
+
+        .navMenu > li.active > ul.sub-menu, .navMenu > li > ul.sub-menu > li.active > ul.sub-menu {
+        }
+
+        .navMenu > li > ul.sub-menu li {
+            background: none;
+            margin: 0px;
+            padding: 0px;
+            border-bottom: 0px solid #eee;
+        }
+
+            .navMenu > li > ul.sub-menu li > ul.sub-menu li {
+                background: none;
+                margin: 0px;
+                padding: 0px;
+                background-color: transparent;
+                border-bottom: 0px;
+            }
+
+            .navMenu > li > ul.sub-menu li > a {
+                display: block;
+                font-size: 14px;
+                line-height: 40px;
+                padding-left: 20px;
+                color: #333;
+                clear: both;
+            }
+
+                .navMenu > li > ul.sub-menu li > a.active, .navMenu > li > ul.sub-menu li > a:hover, .navMenu > li > ul.sub-menu > li.active > a {
+                    color: #FFF;
+                    background: #1D79A2;
+                }
+
+            .navMenu > li > ul.sub-menu li > ul.sub-menu li > a {
+                padding-left: 20px !important;
+            }
+
+            .navMenu > li > ul.sub-menu li > ul.sub-menu li > ul.sub-menu li > a {
+                padding-left: 35px !important;
+                color: #666;
+            }
+
+    .icon_1:before {
+        content: "\f0ac";
+    }
+
+    .icon_2:before {
+        content: "\f0ac";
+    }
+
+    .icon_3:before {
+        content: "\f0ac";
+    }
+
+    .dm-top1 {
+        background-color: #298CEF;
+        width: 100%;
+        height: 60px;
+    }
+
+    .dm-name, .dm-sz {
+        float: left;
+    }
+
+        .dm-sz li {
+            float: left;
+        }
+
+    .dm-xtcd {
+        background-color: #393D49;
+        height: 40px;
+        line-height: 40px;
+        color: #fff;
+        font-size: 15px;
+        padding-left: 10px;
+    }
+    /*.navMenu li:first-child a:first-child
+    {
+    background-color:#1AA0D7;
+
+    }
+    .navMenu li:first-child a{
+        color: #fff;
+    }*/
+    .dm-top-right {
+        font-size: 14px;
+        /*position: fixed;*/
+        right: 0px;
+        top: 0px;
+    }
+
+    .w60 {
+        width: auto;
+        margin-right: 5px;
+    }
+
+    .top-right1 {
+        padding-top: 15px;
+    }
+
+    .top-right2 {
+        padding-top: 8px;
+    }
+
+    .dm-logo img {
+        padding-top: 12px;
+        width: 48px;
+        height: 48px;
+    }
+
+    .dm-logo {
+        font-size: 40px;
+        height: 75px;
+        line-height: 66px;
+        letter-spacing: 5px;
+    }
+
+    #divNav span {
+        cursor: pointer;
+    }
+
+    .layui-layer-loading .layui-layer-content {
+        width: 367px;
+        height: 64px;
+        background: none !important;
+    }
+
+    .dm-top-right {
+        margin-top: 0px;
+        border-left: 1px solid #ddd;
+        height: 60px;
+        width: 110px;
+    }
+
+    .tabs-with-icon {
+        padding-left: 0px !important;
+    }
+
+    .layout-panel-center {
+        margin-top: 0px;
+    }
+
+    .layout-panel-west {
+        margin-top: 0px;
+    }
+
+    .layout-panel-south {
+        display: none !important;
+    }
+
+    .panel-tool {
+        top: 35%;
+    }
+
+    .layout-expand .panel-header {
+        background-color: #f5f5f5;
+    }
+
+    .logo-1 {
+        font-size: 26px;
+        letter-spacing: 3px;
+    }
+
+    .sy-tc {
+        /*float: right;*/
+        padding-left: 10px;
+        padding-top: 6px;
+    }
+
+    .dm-bbh {
+        position: absolute;
+        top: 25px;
+        left: 205px;
+    }
+
+    .layout-panel-west .panel-header, .layout-panel-west .panel-title {
+        height: 28px !important;
+        line-height: 28px !important;
+    }
+</style>
+<div class="myhome-z" style="display:none;">
+    <ul>
+
+        <li onclick="grsz()">
+            <a href="#">个人设置</a>
+        </li>
+        <li>
+            <a href="#" onclick="loginout()">退出系统</a>
+        </li>
+    </ul>
+</div>
+<div data-options="region:'north',border:false,height:60" style="overflow:hidden" class="header">
+    <div class="dm-top">
+        <div class="">
+            <hgroup id="heading" class="logo-1">
+                单采血浆站-浆站监管平台
+            </hgroup>
+            @*<div class="dm-bbh">版本号：<span>V1.0</span></div>*@
+            <nav id="navbar">
+                <div class="dm-top-right">
+
+                    <div class="sy-tc sy-txxx">
+                        @*<span style="display: block;float: left;padding-top: 0px;width: 36px;border-radius: 100%;overflow: hidden;padding-right: 0px;margin-right: 5px;margin-top: 5px;">
+                            <img src="/images/tx.png" width="36" />
+                            </span>*@
+                        <span class="top-right1">
+                            @Context.User.Identity.Name&nbsp;欢迎
+                            @*| 在线用户:
+                                <span id="Online">1</span>*@
+                        </span>
+                        @*<div class="top-right2">
+                                <div class="w60" onclick="changepwd()" id="fullScreen">
+                                    <i class="fa fa-lock"></i>
+                                    密码
+                                </div>
+                                <div class="w60" onclick="Logout()">
+                                    <i class="fa fa-power-off"></i>
+                                    退出
+                                </div>
+                            </div>*@
                     </div>
-                </li>
+
+                </div>
+                <ul class="nav nav-default" id="headmenu">
+                    <template v-for="item in items">
+                        <li v-bind:data-url="item.attributes.URL" v-bind:data-id="item.id" v-bind:data-opentype="item.attributes.OpenType">
+
+                            <a href="#" class="active">
+                                <span class="h-ico">
+                                    <img v-bind:src="item.attributes.ICON" width="20">
+                                </span>
+                                <span>{{item.text}}</span>
+                            </a>
+
+                        </li>
+                    </template>
+
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+</div>
+<div id="left" data-options="region:'west',split:true,title:'导航菜单'" style="width:160px; border-bottom:1px solid #ccc;overflow-x: hidden;">
+    <div class="navMenubox">
+        <div id="slimtest1">
+            <ul id="demo" class="navMenu">
                 @{
                     List<MenuEntity> menuList = ViewBag.MenuList;
                     foreach (MenuEntity menu in menuList.Where(p => p.ParentId == 0).OrderBy(p => p.MenuSort))
@@ -93,114 +508,193 @@
                         </li>
                     }
                 }
+                @*<item v-for='model in treeData' v-bind:model='model' v-bind:key="model.id"></item>*@
             </ul>
         </div>
-    </nav>
-    <!--左侧导航结束-->
-    <!--右侧部分开始-->
-    <div id="page-wrapper" class="gray-bg dashbard-1">
-        <div class="row">
-            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <a class="navbar-minimalize minimalize-styl-2" href="#" title="收起菜单">
-                    <i class="fa fa-bars"></i>
-                </a>
-                <ul class="nav navbar-top-links navbar-right welcome-message">
-                    <li><a id="fullScreen"><i class="fa fa-arrows-alt"></i>全屏</a></li>
-                    <li class="dropdown user-menu">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-hover="dropdown">
-                            <img src="@portrait" class="user-image">
-                            <span class="hidden-xs">@operatorInfo.RealName</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="mt5">
-                                <a class="menuItem" href="#" data-url='@Url.Content("~/OrganizationManage/User/UserDetail")?id=@operatorInfo.UserId'>
-                                    <i class="fa fa-user"></i> 个人中心
-                                </a>
-                            </li>
-                            <li>
-                                <a onclick="showChangePasswordForm()">
-                                    <i class="fa fa-key"></i> 修改密码
-                                </a>
-                            </li>
-                            <li>
-                                <a onclick="showSwitchSkinForm()">
-                                    <i class="fa fa-dashboard"></i> 切换主题
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="@Url.Content("~/Home/LoginOff")">
-                                    <i class="fa fa-sign-out"></i> 退出登录
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="row content-tabs">
-            <button class="roll-nav roll-left tabLeft">
-                <i class="fa fa-backward"></i>
-            </button>
-            <nav class="page-tabs menuTabs">
-                <div class="page-tabs-content">
-                    <a href="javascript:;" class="active menuTab" data-id="/system/main">首页</a>
-                </div>
-            </nav>
-            <button class="roll-nav roll-right tabRight">
-                <i class="fa fa-forward"></i>
-            </button>
-            <div class="btn-group roll-nav roll-right">
-                <button class="dropdown J_tabClose" data-toggle="dropdown">
-                    页签操作<span class="caret"></span>
-                </button>
-                <ul role="menu" class="dropdown-menu dropdown-menu-right">
-                    <li><a class="tabCloseCurrent" href="#">关闭当前</a></li>
-                    <li><a class="tabCloseOther" href="#">关闭其他</a></li>
-                    <li><a class="tabCloseAll" href="#">全部关闭</a></li>
-                </ul>
-            </div>
-            <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
-        </div>
-        <div class="row mainContent" id="content-main">
-            <iframe class="YiSha_iframe" name="iframe0" width="100%" height="100%" data-id="/system/main" src="@Url.Content("~/Home/Welcome")" frameborder="0" seamless></iframe>
-        </div>
     </div>
-    <!--右侧部分结束-->
 </div>
+<div id="main" div data-options="region:'center'" style="background: #eee; overflow-y: hidden;">
+</div>
+<div id="mm" class="easyui-menu" style="width: 150px; display: none">
+    <div id="mm-tabupdate">刷新</div>
+    <div class="menu-sep"></div>
+    <div id="mm-tabclose">关闭</div>
+    <div id="mm-tabcloseall">全部关闭</div>
+    <div id="mm-tabcloseother">除此之外全部关闭</div>
+    <div class="menu-sep"></div>
+    <div id="mm-tabcloseright">当前页右侧全部关闭</div>
+    <div id="mm-tabcloseleft">当前页左侧全部关闭</div>
+    <div class="menu-sep"></div>
+    <div id="mm-exit">退出</div>
+</div>
+<template id="item-template">
+    <li>
+        <a v-on:click="clickfun" v-bind:data-id="model.id" v-bind:data-url="model.attributes.URL" v-bind:data-width="model.attributes.width" v-bind:data-height="model.attributes.height" v-bind:data-title='model.text' v-bind:data-opentype="model.attributes.OpenType" href="javascript:;" class="afinve">
+            <!--<i class="icon_1"></i>
+            -->
+            <span class="h-ico" v-if="model.attributes.ICON!=null&&model.attributes.ICON!=''">
+                <img v-bind:src="model.attributes.ICON" width="16">
+            </span>
+            <span class="">{{model.text}}</span>
+            <span v-if='model.children.length>0' class="arrow"></span>
+        </a>
+        <ul class="sub-menu" v-if="model.children.length>
+        0">
+            <item class="item" v-for="cel in model.children" v-bind:model="cel"></item>
 
+        </ul>
+    </li>
+</template>
 <script type="text/javascript">
-    if (!ys.isNullOrEmpty($.cookie('Skin'))) {
-        var skin = decodeURIComponent($.cookie('Skin'));
-        $("body").addClass(skin.split('|')[0]);
-        $("body").addClass(skin.split('|')[1]);
-    } else {
-        var sideTheme = "theme-dark";
-        var skinName = "skin-blue";
-        $("body").addClass(sideTheme);
-        $("body").addClass(skinName);
+    $(document).ready(function () {
+        $('.sy-txxx').hover(function () {
+            $(".myhome-z").css('display', 'block');
+        }, function () {
+            $(".myhome-z").css('display', 'none');
+        });
+
+        $(".myhome-z").hover(function () {
+            $(this).css('display', 'block');;
+        }, function () {
+            $(this).css('display', 'none');
+        });
+        //var bb = $("#tabs").tabs("options");
+
+        //createPanel();
+        //$.parser.parse();
+    })
+</script>
+<script type="text/javascript">
+
+    function createPanel(pp, url) {
+        $("#main").empty();
+        if (pp == 2) {
+            var h = $("#main").height(); var w = $("#main").width();
+            $("<iframe scrolling='auto' allowfullscreen='true' align='ceter' frameborder='0' src='" + url + "' style='height:" + h + "px;width:" + w + "px'></iframe>").appendTo($("#main"));
+        } else {
+            $('<div class="easyui-tabs" id="tabs" data-options="fit:true,border:false"></div> ').appendTo($("#main")).css('display', 'block');
+        }
+    }
+    function closeThisTab(title, refs, fun, args) {
+        var tab = $('#tabs').tabs('getSelected');
+        var i = $('#tabs').tabs('getTabIndex', tab);
+        $('#tabs').tabs('close', i);
+        if (refs) {
+            if (title != '' && typeof (title) != "undefined") {
+                TabFnSearch(title, fun, args);
+            }
+        }
+    }
+    function closeTab(title) {
+        $('#tabs').tabs('close', title);
+    }
+    function TabFnSearch(title, fun, args) {
+        var tab = $('#tabs').tabs('getTab', title);
+        var i = $('#tabs').tabs('getTabIndex', tab);
+        if (fun != '' && typeof (fun) != "undefined") {
+            $("#tabs .panel-body:eq(" + i + ") iframe")[0].contentWindow.dynamic(fn, args);;
+        } else {
+            $("#tabs .panel-body:eq(" + i + ") iframe").contents().find("#FnSearch_btn").trigger("click");
+        }
+        $('#tabs').tabs('select', title);
     }
 
-    function showChangePasswordForm() {
-        ys.openDialog({
-            title: "修改密码",
-            content: '@Url.Content("~/OrganizationManage/User/ChangePassword")' + '?id=@operatorInfo.UserId',
-            height: "500px",
-            callback: function (index, layero) {
-                var iframeWin = window[layero.find('iframe')[0]['name']];
-                iframeWin.saveForm(index);
+    function menuclick(p) {
+        var url = $(p).data('url');
+        if (url == undefined) {
+        } else if (url == null || url == '#' || url == '') {
+        } else {
+            var menuid = $("#file_menuid").val();
+            $("#divNav").empty();
+            addTab($(p).data('title'), url);
+
+            $('.active.afinve').removeClass('active');
+            $(p).addClass("active");
+            return false;
+        }
+        var parent = $(p).parent().parent();//获取当前页签的父级的父级
+        var labeul = $(p).parent("li").find(">ul")
+        if ($(p).parent().hasClass('open') == false) {
+            //展开未展开
+            parent.find('ul').slideUp(300);
+            parent.find("li").removeClass("open")
+            parent.find('li a').removeClass("active").find(".arrow").removeClass("open")
+            $(p).parent("li").addClass("open").find(labeul).slideDown(300);
+            $(p).addClass("active").find(".arrow").addClass("open");
+            return false;
+        } else {
+            $(p).parent("li").removeClass("open").find(labeul).slideUp(300);
+            if ($(p).parent().find("ul").length > 0) {
+                $(p).removeClass("active").find(".arrow").removeClass("open")
+            } else {
+                $(p).addClass("active")
+            }
+            return false;
+        }
+
+    }
+    function open_nav() {
+        //	alert('')
+        $('.navMenu li:first').addClass("open");
+        if ($(".navMenu li:first ul").length > 0) {
+            $(".navMenu li:first ul li:first a:first").addClass("active");
+            $(".navMenu li:first ul").show();
+        } else {
+            $(".navMenu li:first a:first").addClass("active");
+        }
+
+    }
+
+    function FnSearch() {
+        setTimeout(function () {
+            try {
+                // 执行当前页面的搜索
+                $("#tabs .panel-body:visible iframe").contents().find("#FnSearch_btn").trigger("click");
+            } catch (e) {
+
+            }
+        }, 300);
+    }
+    function FnSearchfun(fun) {
+        setTimeout(function () {
+            try {
+                // 执行当前页面的搜索
+                $("#tabs .panel-body:visible iframe").contents().find("#" + fun + "").trigger("click");
+            } catch (e) {
+
+            }
+        }, 300);
+    }
+    // 动态调用子页面方法
+    function exiffun(fn, args) {
+        $("#tabs .panel-body:visible iframe")[0].contentWindow.dynamic(fn, args);
+    }
+
+    function changepwd() {
+        // changeTabstiel();
+        //  completeLock();//
+        parent.layerView("个人设置", "/Manage/UserInfo?UserAccountID=", 500, 500);
+    }
+
+    function grsz() {
+        layer.open({
+            type: 2,
+            title: '加密锁密码修改',
+            area: ['500px', '500px'],
+            shade: [0.8, '#393D49'],
+            content: '/Manage/UserInfo?ID=',
+            //btn: ["保存", "取消"],
+        });
+    }
+
+    function loginout() {
+        $.messager.confirm('退出提示', '您确定要退出系统吗？', function (index) {
+            if (index) {
+                location.href = '/Login/Logout';
             }
         });
-    }
 
-    function showSwitchSkinForm() {
-        ys.openDialog({
-            title: "切换主题",
-            content: '@Url.Content("~/Home/Skin")',
-            width: '530px',
-            height: '390px',
-            btn: null,
-            maxmin: false
-        });
+
+
     }
 </script>

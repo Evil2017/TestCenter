@@ -1,0 +1,253 @@
+﻿@{
+    ViewBag.Title = "BloodFastTest";
+}
+<style type="text/css">
+    .dm-td1 {
+        width: 130px;
+    }
+
+    .dm-input1 {
+        margin-left: 10px;
+    }
+
+    .dm-l-lrfs select {
+        width: 212px;
+        margin-left: 10px;
+        padding: 4px 5px;
+        border: 1px solid #d8d8d8;
+    }
+</style>
+<div data-options="region:'west'" data-options="collapsed:false,split:true"
+     style="width: 238px; display: inline-block; overflow: auto;">
+    <div id="tt" data-options="border:false">正在加载</div>
+</div>
+
+<div class="dm-zl-box" id="SearchPanel" style="position:relative;left:230px">
+    <div class="dm-ti1">
+        <b>免疫登记验证</b>
+    </div>
+    <div class="dm-xx-ti" id="ee">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="dm-td1">档案编号：</td>
+                <td>
+                    <input type="text" class="dm-input1" ID="DID" onkeydown="nextClick(getDonor)" />
+
+                </td>
+                <td class="dm-td1">身份证号码：</td>
+                <td>
+                    <input type="text" class="dm-input1" ID="CertID" />
+                </td>
+                <td>
+                    <button class="dm-btn-ck" type="button" onclick="getDonor()">开始登记</button>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="aa" style="display:none" >
+    <div class="dm-l-lrfs" style="width:410px; float:left;position:relative;left:230px" style="">
+        <div class="dm-zl-box">
+            <div class="dm-ti1">
+                <b>快速检测</b>
+            </div>
+            <form id="Test" method="post">
+                <table border="0" width="99%" cellpadding="0" cellspacing="0" style="margin-top:10px;">
+                    <tr>
+                        <td class="dm-td1">血清蛋白含量：</td>
+                        <td>
+                             <select id="test51" name="test51" onkeydown="easySelect('TP', this)" onchange="CheckResult(this)">
+                                <option value="≥60">≥60</option>
+                                <option value="<60"><60</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="dm-td1">梅毒：</td>
+                        <td>
+                             <select id="test16" name="test16">
+                                <option value="阴性">阴性</option>
+                                <option value="阳性">阳性</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="dm-td1">抗-HIV：</td>
+                        <td>
+                           <select id="test15" name="test15">
+                                <option value="阴性">阴性</option>
+                                <option value="阳性">阳性</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="dm-td1">抗-HCV：</td>
+                        <td>
+                             <select id="test14" name="test14">
+                                <option value="阴性">阴性</option>
+                                <option value="阳性">阳性</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="dm-td1">HBsAg：</td>
+                        <td>
+                             <select id="test13" name="test13">
+                                <option value="阴性">阴性</option>
+                                <option value="阳性">阳性</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="dm-td1">ALT：</td>
+                        <td>
+                             <select id="test12" name="test12">
+                                <option value="≤25Karu">≤25Karu</option>
+                                <option value="＞25KarU">＞25KarU</option>
+                            </select>
+                        </td>
+                    </tr>
+                
+                    <tr  >
+                        <td class="dm-td1">检测结论：</td>
+                        <td>
+                            <select id="TestResult" name="TestResult">
+                                <option value="合格">合格</option>
+                                <option value="不合格">不合格</option>
+                            </select>
+                        </td>
+                    </tr>   
+                    <tr>
+                        <td class="dm-td1">检测医生：</td>
+                        <td>
+                            <input type="text" class="dm-input1 " value="" id="JName" name="JName" onfocus="UserSign(this.id,'操作员签名','FastTest','0')" />
+
+                            <input type="hidden" ID="FID" name="FID" />
+                        </td>
+                    </tr>      
+                     <tr>
+                        <td class="dm-td1">审核医生：</td>
+                        <td>
+                            <input type="text" class="dm-input1 " value="" id="SHName" name="SHName" onfocus="UserSign(this.id,'审核人签名','FastTest','0')" />
+
+                             <input type="hidden" ID="SHFID" name="SHFID" />
+                        </td>
+                    </tr>                   
+                    <tr>
+                        <td class="dm-td1"></td>
+                        <td>
+                            <div style="margin-left:10px;">
+                                <button id="btn_save" class="btn btn1 btn-info" onclick="save()" type="button">&nbsp;保存&nbsp;</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" name="DonorID" />
+                 <input type="hidden" name="DonateID" id="DonateID" />
+                
+            </form>
+        </div>
+    </div>
+
+    <div class="dm-zl-box" id="controlPanel" style="display:block;position:relative;left:230px">
+
+        <div class="dm-r-xq">
+            <div class="">
+                <div class="dm-mo1">
+                    <div class="dm-ti1">
+                        <b>献浆员基本信息</b>
+                    </div>
+                    <div class="dm-fj-list">
+                        <table border="0" width="98%" cellpadding="0" cellspacing="0" class="dm-gjjbxx">
+                            <tr>
+                                <td class="dm-td1">档案编号：</td>
+                                <td width="140" data-tag="DonorID" id="Donorssss"></td>
+                                <td class="dm-td1">血浆类型：</td>
+                                <td width="110" data-tag="BloodTyppe"></td>
+                                <td class="dm-td1">状态：</td>
+                                <td data-tag="isNormal"></td>
+                            </tr>
+                            <tr>
+                                <td class="dm-td1">上次供浆日期：</td>
+                                <td data-tag="LatestDonateDate"></td>
+                                <td class="dm-td1">浆员姓名：</td>
+                                <td data-tag="DonorName"></td>
+                                <td class="dm-td1">浆员性别：</td>
+                                <td data-tag="Gender"></td>
+                            </tr>
+                            <tr>
+                                <td class="dm-td1">出生日期：</td>
+                                <td data-tag="DOB"></td>
+                                <td class="dm-td1">下次预约日期：</td>
+                                <td data-tag="ProContractDate"></td>
+                                <td class="dm-td1">浆员民族：</td>
+                                <td data-tag="Nation"></td>
+                            </tr>
+                            <tr>
+                                <td class="dm-td1">证件号码：</td>
+                                <td data-tag="CertID"></td>
+                                <td class="dm-td1">有效期限：</td>
+                                <td data-tag="CertIDOK"></td>
+                                <td class="dm-td1">建档日期：</td>
+                                <td data-tag="RegDate"></td>
+                            </tr>
+                            <tr>
+                                <td class="dm-td1">介绍人：</td>
+                                <td data-tag="IntroductionID"></td>
+                                <td class="dm-td1">备注：</td>
+                                <td data-tag="Note"></td>
+                                <td class="dm-td1">备注：</td>
+                                <td data-tag="Nation2"></td>
+                            </tr>
+                            <tr>
+                                <td class="dm-td1">登记号：</td>
+                                <td data-tag="PKH"></td>
+                                <td class="dm-td1">浆员住址：</td>
+                                <td colspan="3" data-tag="CommAddress"></td>
+                            </tr>
+                        </table>
+                        <div class="dm-fj-list">
+                            <table border="0" cellspacing="0" cellpadding="0">
+
+                                <tr>
+                                    <td height="126">
+                                        <div class="dm-gj1">
+                                            <img border="0" style="min-width:102px" onerror="nofind();" id="DonorPhoto" height="126">
+                                            <!--<img border="0" style="min-width:102px" src="/content/images/face.png" onerror="nofind();"  height="126">-->
+                                        </div>
+                                    </td>
+                                    <td height="126">
+                                        <div class="dm-gj4">
+                                            <img border="0" style="min-width:102px;" onerror="nofind();" id="DonorPhotoCert" height="126">
+
+                                            <!--<img border="0" style="min-width:102px;" src="/content/images/sfz-bm.jpg" onerror="nofind();" height="126">-->
+                                        </div>
+                                    </td>
+                                    <td height="126">
+                                        <div class="dm-gj4">
+                                            <img border="0" style="min-width:102px" onerror="nofind();" id="DonorPhotoCertBack" height="126">
+
+                                            <!--<img border="0" style="min-width:102px" src="/content/images/sfz-bm.jpg" onerror="nofind();" height="126">-->
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">献浆员近照</td>
+                                    <td style="text-align:center">身份证正面</td>
+                                    <td style="text-align:center">身份证背面</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+   
+</script>

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using TestCenter.Util;
 
-namespace TestCenter.Entity
+namespace TestCenter.Entity.TestManage
 {
     /// <summary>
     /// 创 建：admin

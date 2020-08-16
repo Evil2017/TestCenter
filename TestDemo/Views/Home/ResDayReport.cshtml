@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "ResDayReport";
+    string restype = "2";
+    string BictNo = "2";
+    string resname = "物料";
+    switch (restype)
+    {
+        case "1":
+            resname = "耗材";
+            break;
+        case "2":
+            resname = "试剂";
+            break;
+        case "3":
+            resname = "辅材";
+            break;
+        case "4":
+            resname = "疫苗";
+            break;
+        case "5":
+            resname = "办公用品";
+            break;
+
+        default:
+            break;
+    }
+}
+<style type="text/css">
+    .panel-body {
+        background-color: #fff;
+        border: none;
+    }
+</style>
+<div data-options="region:'center'">
+    <table id="jyjl" fit="true"></table>
+    <div style="background-color:#fff; padding:5px 0px 5px 5px;" id="seachtoolwx">
+        &nbsp;&nbsp;
+        <label>入库时间：</label>
+        <input type="text" name="Stime" id="Stime" class="easyui-datebox">
+        <label>到</label>
+        <input type="text" name="Etime" id="Etime" class="easyui-datebox">
+        &nbsp;&nbsp;
+        <label>材料名称</label>
+        <input type="text" class="dm-input1" ID="ResName" onkeydown="OK()" />
+        <label>使用日期：</label>
+        <input type="text" name="Utime" id="Utime" class="easyui-datebox">
+        <label>库存使用日期：</label>
+        <input type="text" name="Rtime" id="Rtime" class="easyui-datebox">
+        <button class="dm-btn-ck" onclick="Search()" type="button">搜索</button>
+        <button class="dm-btn-ck" onclick="Dataexport()" type="button">导出</button>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        init();
+    });
+    function init() {
+        $('#jyjl').datagrid({
+            url: "",
+            queryParams: {},
+            toolbar: '#seachtoolwx',
+            onDblClickRow: function (index, row) { },
+            fit: true,
+            pagination: true,
+            pageSize: 20,
+            pageList: [20, 30, 40, 50],
+            columns: [[
+                { field: 'Res', title: '类型', width: 80 },
+                { field: 'ResName', title: '材料名称', width: 180 },
+                { field: 'FB', title: '厂家/批号', width: 300 },
+                { field: 'Spec', title: '使用规格', width: 110 },
+
+
+                { field: 'DRNum', title: '当日初库存', width: 70, align: "center" },
+                { field: 'UseNum', title: '当日使用数', width: 70, align: "center" },
+                { field: 'BFNum', title: '当日报废数', width: 70, align: "center" },
+                { field: 'EndNum', title: '当日末库存', width: 70, align: "center" },
+
+                { field: 'remark', title: '报废原因', width: 180 },
+                { field: 'IfNew', title: '是否新购入', width: 60, align: "center" },
+                { field: 'Sig', title: '备注', width: 370 },
+                //{ field: 'opts', title: '操作', width: 50 },
+
+            ]]
+        });
+    }
+
+</script>

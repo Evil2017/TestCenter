@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "ResINList";
+    string restype = "2";
+    string BictNo = "2";
+    string resname = "物料";
+    switch (restype)
+    {
+        case "1":
+            resname = "耗材";
+            break;
+        case "2":
+            resname = "试剂";
+            break;
+        case "3":
+            resname = "辅材";
+            break;
+        case "4":
+            resname = "疫苗";
+            break;
+        case "5":
+            resname = "办公用品";
+            break;
+
+        default:
+            break;
+    }
+}
+<style type="text/css">
+    .panel-body {
+        background-color: #fff;
+        border: none;
+    }
+</style>
+<div data-options="region:'center'">
+    <table id="jyjl" fit="true"></table>
+    <div style="background-color:#fff; padding:5px 0px 5px 5px;" id="seachtoolwx">
+        &nbsp;&nbsp;
+        <label>入库时间：</label>
+        <input type="text" name="Stime" id="Stime" class="easyui-datebox">
+        <label>到</label>
+        <input type="text" name="Etime" id="Etime" class="easyui-datebox">
+        &nbsp;&nbsp;
+        <label>材料名称：</label>
+        <input type="text" class="dm-input1" ID="ResName" onkeydown="OK()" />
+        &nbsp;&nbsp;
+        <label>包含0库存</label>
+        <input type="checkbox" ID="ifkc" />
+        &nbsp;&nbsp;
+        <label>出库时间：</label>
+        <input type="text" name="OutTime" id="OutTime" class="easyui-datebox">
+        <button class="dm-btn-ck" onclick="Search()" type="button">搜索</button>
+        <button class="dm-btn-ck" onclick="Dataexport()" type="button">导出</button>
+
+    </div>
+</div>
+<script>
+    $(function () { init(); });
+    function init() {
+        $('#jyjl').datagrid({
+            url: "",
+            queryParams: {},
+            toolbar: '#seachtoolwx',
+            pageSize: 20,
+            onDblClickRow: function (index, row) { },
+            fit: true,
+            columns: [[
+                { field: 'InDate', title: '日期', width: 90 },
+                { field: 'ResName', title: '材料名称', width: 110 },
+                { field: 'Factory', title: '生产厂家', width: 140 },
+                { field: 'spec', title: '规格', width: 50 },
+                { field: 'BictNo', title: '批号', width: 110 },
+                {
+                    field: 'OutDate', title: '有效期', width: 90
+
+                },
+                { field: 'DW', title: '单位', width: 70 },
+                { field: 'InNum', title: '入库数量', width: 70 },
+                {
+                    field: 'OldNum', title: '当日库存', width: 70, formatter: function (i, r) {
+                        if (r.OldNum == "0") { return r.StockNum; }
+                        else return r.OldNum;
+
+                    }
+                },
+                { field: 'UseNum', title: '实际有效库存', width: 70 },
+                { field: 'UserID', title: '操作人', width: 60 },
+                { field: 'ConUserID', title: '审核人', width: 60 },
+                {
+                    field: 'opts', title: '优先使用', width: 60, formatter: function (i, r) {
+                        if (r.isUse == "1") { return "<a href='' style='color:blue'  onclick='FU(" + r.ID + ",'0')' >优先</a>"; }
+                        else { return "<a href='' style='color:green' onclick='FU(" + r.ID + ",'1')'  >正常</a>"; }
+                    }
+                },
+                {
+                    field: 'opts1', title: '操作', width: 80, formatter: function (i, r) {
+                        return "<a href='#' onclick='Add(" + r.ID + ")'>修改</a> <a href='#' onclick='Del(" + r.ID + ")' >删除</a>"
+                    }
+                },
+                //{ field: 'opts', title: '操作', width: 50 },
+
+            ]]
+        });
+    }
+</script>

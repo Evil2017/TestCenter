@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "QualityCal";
+}
+<script src="/content/hicharts/code/highcharts.js"></script>
+<style type="text/css">
+    .panel-body {
+        background-color: #fff !important;
+    }
+</style>
+<div class="easyui-layout" fit="true">
+    
+    <div data-options="region:'north'" style="height:80px;padding:5px">
+        <div style="background-color:#fff; " id="seachtoolwx">
+
+            <span>检测项目：</span><span data-tag="TestItem"></span>
+            <span>试剂批号：</span><span data-tag="BectNO"></span>
+            <span>试剂厂家：</span><span data-tag="Factory"></span>
+            <span>试剂有效期：</span><span data-tag="OutDate"></span>
+            <span>质控品：</span><span data-tag="ZKP"></span>
+            <span>质控品单位：</span><span data-tag="ZPKDW"></span>
+            <span>质控品批号：</span><span data-tag="ZKPBectNO"></span>
+            <span>质控品浓度：</span><span data-tag="ZKPND"></span>
+
+            <br />
+            <span>均值x：</span><span data-tag="AVG"></span>
+            <span>标准差s：</span><span data-tag="STDEV"></span>
+            <span>变异系数cv：</span><span data-tag="CV"></span>
+            <span>上告警限+2s：</span><span data-tag="U2S"></span>
+            <span>上失控限+3s：</span><span data-tag="U3S"></span>
+            <span>下告警限-2s：</span><span data-tag="D2S"></span>
+            <span>下失控限-3s：</span><span data-tag="D3S"></span>
+            <br />
+            每页<input type="text" value="20" style="width:40px" id="rows" />行
+            上一页
+            第<input type="text" value="1" style="width:40px" id="page"/>页 下一页
+            <button class="dm-btn-ck" onclick="QualityRefs()" type="button">更新</button>
+            <input type="hidden" id="IfLock" value="" name="IfLock" />
+            
+            <button class="dm-btn-ck" onclick="out()" type="button">导出</button>
+            <button class="dm-btn-ck" onclick="canva()" type="button">质控图</button>
+            <button class="dm-btn-ck" id="ll">锁定</button>
+            
+        </div>
+    </div>
+    <div data-options="region:'west'" style="padding:10px;width:800px ">
+        <table id="jyjl" fit="true"></table>
+    </div> 
+</div>

@@ -1,0 +1,775 @@
+﻿@{
+    ViewBag.Title = "DMTestResultSend_SY";
+   // string dydbch = VILNKCtr.VILNKCtr.getBankConfig("蛋白电泳结果定性/定量").ToString();
+}
+<style type="text/css">
+    .panel-body {
+        background-color: #fff;
+    }
+</style>
+<style>
+    .dm-xq .textbox {
+        width: 150px !important;
+    }
+
+    .layout-body.panel-body {
+        border: 0px solid #dee5e7;
+        padding: 0px 10px;
+    }
+
+    .datagrid .panel-body {
+        border: none !important;
+    }
+
+    .datagrid-view {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+    }
+
+    .tabs-header.tabs-header-left {
+        width: 110px !important;
+    }
+
+    .dm-tabs1 .tabs-panels {
+        border-left-width: 5px !important;
+    }
+
+    .dm-tabs1 .tabs li.tabs-selected a.tabs-inner {
+        background-color: #e7eaec !important;
+        color: #298CEF !important;
+        border-left-width: 2px !important;
+        border-left-color: #298CEF !important;
+        border-left-style: solid;
+    }
+
+    .dm-tabs1 .tabs li {
+    }
+
+    .dm-ti2 {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        margin-top: 10px;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .tabs-header-left .tabs {
+        padding: 0px 0 0 2px;
+    }
+
+    .dm-tabs1 .tabs li.tabs-selected a.tabs-inner {
+        border: 0px solid #e7eaec;
+    }
+
+    .dm-jbxx {
+        border-bottom: 1px dashed #ddd;
+    }
+
+    .dm-fj-list table tr td:nth-child(even) {
+        min-width: 120px;
+    }
+
+    .dm-xq .tabs-wrap {
+        background-color: #fff !important;
+    }
+
+    .btn3 {
+        background-color: #27c24c;
+        border-color: #27c24c;
+    }
+
+    .btn {
+        border-radius: 50px;
+        padding: 6px 10px;
+        border: 0px;
+        min-width: 100px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .dm-tj-btn {
+        margin-left: 120px;
+    }
+
+    .panel-body {
+        background-color: #fff !important;
+    }
+
+    #dlg {
+        position: relative;
+    }
+
+    .dm-bcqx {
+        border-top: 1px solid #eee;
+        position: absolute;
+        bottom: 5px;
+        overflow: hidden;
+        width: 100%;
+        padding-top: 5px;
+    }
+
+    .bb {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .trr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .dm-xj {
+        margin: 10px auto 0px;
+        border: 1px solid #ddd;
+    }
+
+        .dm-xj td {
+            height: 35px;
+        }
+
+        .dm-xj th {
+            height: 35px;
+        }
+
+        .dm-xj th {
+            text-align: center;
+            padding-right: 10px;
+            font-weight: bold;
+        }
+
+        .dm-xj td {
+            text-align: center;
+            padding-right: 10px;
+        }
+
+    .br {
+        border-right: 1px solid #ddd;
+    }
+
+    .dm-zj {
+        margin: 10px auto 0px;
+        border: 1px solid #ddd;
+    }
+
+        .dm-zj td {
+            height: 35px;
+        }
+
+            .dm-zj td:nth-child(odd) { /*奇数*/
+                text-align: right;
+                padding-right: 10px;
+                font-weight: bold;
+            }
+
+            .dm-zj td:nth-child(even) { /*偶数*/
+                text-align: left;
+                padding-left: 10px;
+            }
+
+    .dm-bcqx .btn1 {
+        background-color: #298CEF;
+        border-color: #298CEF;
+        text-align: center;
+        color: #fff;
+        padding: 8px 20px;
+        float: right;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .dm-bcqx .btn2 {
+        background-color: #fff;
+        border: 1px solid #d9d9d9;
+        text-align: center;
+        color: #5D5B60;
+        padding: 7px 20px;
+        float: right;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .dm-zl-box {
+        padding-top: 0px !important;
+        padding-left: 10px !important;
+    }
+
+    .dm-input3 {
+        padding: 3px 5px;
+    }
+    .dm-xx-ti td{
+        padding-bottom: 5px;
+    }
+    .dm-ztimg {
+        width: 100px;
+        height: 88px;
+        position: fixed;
+        z-index: 999999999999;
+        top: 0px;
+        left: 860px;
+    }
+
+    .dm-zl-box span {
+        margin-left: 17px;
+    }
+
+    #optionHtml .dm-input1 {
+
+    }
+    #optionHtml .dm-input23 {
+        width: 212px;
+        padding: 4px 5px;
+    border: 1px solid #d8d8d8;
+    margin-left: 7px;
+    }
+
+    #ListToobar {
+        width: 100%;
+        background-color: #fff;
+        padding: 5px 0px 5px 5px;
+    }
+.dm-xq-btnz{
+        padding: 0px 0px 0px 50px;
+}
+</style>
+
+<div data-options="region:'west'" data-options="collapsed:false,split:true"
+     style="width: 335px; display: block; overflow: auto;">
+    <div id="ListToobar">
+        <label id="tt_Title">待检测名单</label>
+        &nbsp;&nbsp;
+        日期：
+        <input type="text" name="sltDate" id="sltDate" class="easyui-datebox"></div>
+    <div id="tt" data-options="border:false">1111</div>
+</div>
+
+<div data-options="region:'center'" style="position:relative;left:-20px">
+    <div class="dm-zl-box" id="SearchPanel" style="margin-top:20px;">
+        <div class="dm-ti1"> <b>献浆员查询</b>
+        </div>
+        <div class="dm-xx-ti">
+            <input type="hidden" id="ddd" />
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="dm-td1">档案编号：</td>
+                    <td>
+                        <input type="text" style="width:120px" class="dm-input1" ID="DonorID" tag="DonorID" onkeydown="CheckOnClick('ok')" />
+                    </td>
+                    <td class="dm-td1">身份证号码：</td>
+                    <td>
+                        <input type="text" style="width:120px" class="dm-input1" ID="CertID" />
+                    </td>
+                    <td>
+                        <button class="dm-btn-ck" onclick="getDonor()" id="ok" type="button">查询</button>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="subject">
+        @*<div class="dm-zl-box" id="controlPanel" style="display:none">
+            <div id="DonorInfoanel">@Html.Partial("../Partial/PartialDonorInfo")</div>
+        </div>*@
+        <div class="dm-zl-box" id="controlPanel" style="display:none">
+            @*<div id="DonorInfoanel">@Html.Partial("../Partial/PartialDonorInfo")</div>*@
+            <div id="DonorInfoanel">
+                <div data-options="region:'center'">
+                    <div title="基本信息">
+                        <div class="dm-mo1">
+                            <div class="dm-ti1">
+                                <b>管理资料</b>
+                            </div>
+                            <div class="dm-fj-list">
+                                <table border="0" width="99%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td class="dm-td1">档案编号：</td>
+                                        <td width="20%" data-tag="DonorID" id="Donorssss" onclick="DonorInfo($(this).html())" style="color:blue;cursor:hand"></td>
+                                        <td class="dm-td1">血浆类型：</td>
+                                        <td width="20%" data-tag="DonationType"></td>
+                                        <td class="dm-td1">状态：</td>
+                                        <td data-tag="isNormal" id="snIsn"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dm-td1">浆员姓名：</td>
+                                        <td data-tag="DonorName"></td>
+                                        <td class="dm-td1">浆员性别：</td>
+                                        <td data-tag="Gender"></td>
+                                        <td class="dm-td1">出生日期：</td>
+                                        <td data-tag="DOB"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dm-td1">浆员民族：</td>
+                                        <td data-tag="Nation"></td>
+                                        <td class="dm-td1">证件号码：</td>
+                                        <td data-tag="CertID"></td>
+                                        <td class="dm-td1">有效期限：</td>
+                                        <td data-tag="CertIDOK"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="dm-td1">浆员住址：</td>
+                                        <td data-tag="CommAddress" colspan="5"></td>
+
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                        <div class="dm-mo1" id="ms">
+                            <div class="dm-ti1">
+                                <b>供浆信息</b>
+                            </div>
+                            <div class="dm-fj-list">
+                                <table border="0" width="99%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td class="dm-td1">上次供浆日期：</td>
+                                        <td width="20%" data-tag="LatestCollectDate"></td>
+                                        <td class="dm-td1">下次预约日期：</td>
+                                        <td width="20%" data-tag="ProContractDate"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="dm-td1">建档日期：</td>
+                                        <td data-tag="RegDate"></td>
+                                        <td class="dm-td1">介绍人：</td>
+                                        <td data-tag="IDT_Name"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="dm-td1">备注：</td>
+                                        <td data-tag="Remark1"></td>
+                                        <td class="dm-td1">备注：</td>
+                                        <td data-tag="Remark2"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td class="dm-td1">回访者：</td>
+                                        <td data-tag="HFZ"></td>
+                                        <td class="dm-td1">末次回访方式：</td>
+                                        <td data-tag="Mode"></td>
+                                        <td class="dm-td1">末次回访日期：</td>
+                                        <td data-tag="LastReturnVisitDate"></td>
+                                    </tr>
+                                    <tr id="SideEffects">
+                                        <td class="dm-td1">不良反应日期：</td>
+                                        <td data-tag="ReactionTime"></td>
+                                        <td class="dm-td1">不良反应内容：</td>
+                                        <td data-tag="fys"></td>
+                                    </tr>
+                                    <tr id="Exception">
+                                        <td class="dm-td1">异常情况日期：</td>
+                                        <td data-tag="ExceptionDate"></td>
+                                        <td class="dm-td1">异常情况内容：</td>
+                                        <td data-tag="ExceptionName"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="dm-mo1">
+                            <div class="dm-ti1">
+                                <b>相片信息</b>
+                            </div>
+                            <div class="dm-fj-list">
+                                <table border="0" cellspacing="0" cellpadding="0">
+
+                                    <tr>
+                                        <td height="200" style="padding:0px 5px">
+                                            <img border="0" style="border:1px solid #ccc;min-width:150px"  onerror="nofind();" id="DonorPhoto" height="200">
+                                        </td>                                       
+                                        <td height="200" style="padding:0px 5px">
+                                            <img border="0" style="border:1px solid #ccc;min-width:300px;" onerror="nofind();" id="DonorPhotoCert" height="200">
+                                        </td>
+                                        <td height="200" style="padding:0px 5px">
+                                            <img border="0" style="border:1px solid #ccc;min-width:300px"  onerror="nofind();" id="DonorPhotoCertBack" height="200">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">献浆员近照</td>
+                                      
+                                        <td style="text-align:center">身份证正面</td>
+                                        <td style="text-align:center">身份证背面</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dm-zl-box" id="HPanel" style="display:none">
+            <div class="dm-ti1"> <b>蛋白电泳记录</b>
+            </div>
+            <div class="dm-xx-ti">
+                <table border="0" cellpadding="0" cellspacing="0" id="htable">
+                    <tr>
+                        <td class="dm-td1">登记号：</td>
+                        <td style="color:red;font-weight:bold;padding-left:10px;">
+                            <input type="text" class="dm-input1 easyui-validatebox" ID="H_DonateID" field="DonateID" />
+                        </td>
+                        <td class="dm-td1">操作人：</td>
+                        <td style="padding-left:10px;">
+                            <input type="text" class="dm-input1 easyui-validatebox" field="H_Operator" ID="H_Operator" name="H_Operator" onfocus="UserSign(this.id,'操作员签名','Sample','0')" />
+                            <input type="hidden" ID="UserAccountID_Sign" field="UserAccountID_Sign" name="UserAccountID_Sign" />
+                            <input type="hidden" ID="FID" field="FID" name="FID" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="dm-td1">蛋白电泳含量：</td>
+                        <td style="padding-left:10px;" id="optionHtml"></td>
+                        @*
+                        <td id="optionHtml" style="padding-left:10px;">
+
+                            <select id="SmallValue" field="SmallValue" >
+                                <option>≥50%</option>
+                                <option>＜50%</option>
+                            </select>
+                        </td>
+                        *@
+                        <td class="dm-td1">操作结论：</td>
+                        <td>
+                            <select id="Result" field="Result" class="easyui-combobox">
+                                <option value="1">合格</option>
+                                <option value="2">不合格</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  class="dm-td1">操作时间：</td>
+                        <td>
+                            <input type="text" name="Stimess" id="Stimess" class="easyui-datebox" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")"></td>
+                        <td colspan="2">
+                            <div class="dm-xq-btnz">
+                                <button class="btn1 btn" onclick="SPESave()">保存</button>
+                                &nbsp;   &nbsp;
+                                <button class="btn1 btn" onclick="cancel()">取消</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#DonorID").focus();
+        nofind();
+    });
+
+   
+
+    function nofind() {
+        onerror = null;
+        src = '../themes/images/error.jpg'
+        //var img = event.srcElement;
+
+        //img.src = "/content/images/Face.png";
+
+        //img.onerror = null;
+        //$("#SideEffects").hide();
+        //$("#Exception").hide();
+
+    }
+    var Cert = '';
+    function getcert(st) {
+        var cer = parent.getIDCard(st);
+        if (cer != undefined && cer != "") { $("#CertID").val(cer); getDonor() }
+    }
+    var ifPass = true;
+    $(document).on("change", "#SmallValue", function () {
+        //var thisval = $(this).val();
+        //if (thisval >= "50") {
+        //    ifPass = true;
+        //}
+        //else {
+        //    ifPass = false;
+        //}
+        //var v = ifPass == false ? "2" : "1";
+        //$('#Result').combobox('setValue', v);
+        ChangePass();
+    })
+
+    function ChangePass() {
+        var thisval = $(SmallValue).val();
+        if (thisval >= "50") {
+            ifPass = true;
+        }
+        else {
+            ifPass = false;
+        }
+        var v = ifPass == false ? "2" : "1";
+        $('#Result').combobox('setValue', v);
+    }
+
+    function cancel() {
+        $("#subject").hide();
+        $("#SearchPanel").show();
+        $("#DonorID").val("");
+    }
+
+    function getDonor() {
+        Cert = $("#CertID").val();
+        var DonorID = $("#DonorID").val();
+        if (DonorID != "" || Cert != "") {
+            get("/Donors/DonorInfo_Get",
+                { DonorID: DonorID, Cert: Cert },
+                function (msg) {
+                    if (msg[0]["ReactionTime"] == "无") {
+                        $("#SideEffects").hide();
+                    }
+                    if (msg[0]["ExceptionDate"] == "无") {
+                        $("#Exception").hide();
+                    }
+                    get("/BloodTest/GetIsCheckSPR", { DonorID: msg[0].DonorID, Place: "SPE" }, function (result) {
+                        DonorID = msg[0].DonorID;
+                        for (var p in msg[0]) {
+                            $("[data-tag='" + p + "']").html(msg[0][p]);
+                        }
+                        console.log(JSON.stringify(result));
+                        $("#DonorPhoto").attr("src", "");
+                        $("#DonorPhotoCertPic").attr("src", "");
+                        $("#DonorPhotoCert").attr("src", "");
+                        $("#DonorPhotoCertBack").attr("src", "");
+
+                        $("#DonorPhoto").attr("src", msg[0].DonorPhoto);
+                        $("#DonorPhotoCertPic").attr("src", msg[0].DonorPhotoCertPic);
+                        $("#DonorPhotoCert").attr("src", msg[0].DonorPhotoCert);
+                        $("#DonorPhotoCertBack").attr("src", msg[0].DonorPhotoCertBack);
+                        $("#H_DonateID").val(result[0].DonateID);
+                        $("#DonorID").val(DonorID);
+                        $("#controlPanel").css("display", "");
+                        $("#HPanel").css("display", "");
+
+                        $("#SearchPanel").hide();
+                        $("#subject").show();
+
+                        var htm = "";
+                        if ("dydbch" == "1") {
+                            htm = ' <input type="text" value="" field="SmallValue" id="SmallValue" class="dm-input1 easyui-validatebox" />';
+                            @*var hhh = '@HH';
+                            if (msg[0].Gender == "男") {
+                                htm = '<select id="SmallValue" field="SmallValue"> <option value="≥120">≥120</option> <option value="＜120">＜120</option></select>';
+                            } else {
+                                htm = '<select id="SmallValue" class="dm-input1" field="SmallValue"><option value="≥' + hhh + '">≥' + hhh + '</option><option value="＜' + hhh + '">＜' + hhh + '</option></select>';
+                            }*@
+                        } else {
+                            htm = '<select id="SmallValue" field="SmallValue" class="dm-input23"> <option >≥50%</option> <option >＜50%</option></select>';
+                           // <option>≥50%</option>
+                           //<option>＜50%</option>
+                        }
+
+                        $("#optionHtml").html(htm);
+                        //htm = '<select id="SmallValue" field="SmallValue"> <option value="≥50">≥50</option> <option value="＜50">＜50</option></select>';
+                        // htm = '<input type="text" id="SmallValue" field="SmallValue" />';
+                        // $("#optionHtml").html(htm);
+                        $("#SmallValue").focus();
+                    },
+                        function (msg) {
+                            errmsg(msg);
+                            $("#controlPanel").css("display", "none");
+                            $("#HPanel").css("display", "none");
+                            $("#DonorID").focus();
+                        })
+
+                },
+                function (msg) {
+                    errmsg(msg);
+                    $("#controlPanel").css("display", "none");
+                    $("#HPanel").css("display", "none");
+                    $("#DonorID").focus();
+                });
+        }
+        else {
+            errmsg("档案号不能为空！");
+        }
+    }
+
+    getCookie();
+    function getCookie() {
+        $.ajax({
+            url: "/Config/getCookie",
+            type: 'post',
+            data: {},
+            dataType: "json",
+            success: function (data) {
+                if (data.Status == '1') {
+                    var objs = eval(data.Result[0]);
+                    $("#H_Operator").val(decodeURI(objs.UName));
+                    $("#FID").val(objs.FID);
+                    $("#UserAccountID_Sign").val(objs.UID);
+                }
+            }, error: function () {
+                errmsg("服务器错误！");
+            }
+        })
+    }
+    $(document).on("keydown", "#SmallValue", function (event) {
+        if (event.keyCode == 13) {
+            ChangePass();
+            SPESave();
+        }
+    })
+
+
+    function SPESave() {
+        $("input").blur();
+        if (ifPass == false) {
+            layer.confirm('蛋白电泳测量值不在合格范围，即将保存结论为不合格。确认提交请确定', {
+                btn: ['确定', '取消'] //按钮
+                , cancel: function (index, layero) {
+                    $("#SmallValue").focus();
+                }, success: function (layro, index) {
+                    $(document).on('keydown', layro, function (e) {
+                        if (e.keyCode == 13) {
+                            layer.closeAll();
+                            $("#SmallValue").focus();
+                        }
+                    });
+                }
+            }, function (layro, index) {
+                layer.closeAll();
+                SPESave2();
+            }, function () {
+                $("#SmallValue").focus();
+            });
+        } else {
+            SPESave2();
+        }
+    }
+    function SPESave2() {
+
+        if ((ifPass == false && $("#Result").val() == "1")) {
+            layer.alert("您输入的测量值在不合格范围内，请选择结果为不合格，或者修改测量值在合格范围内");
+            return false;
+        }
+        if ((ifPass == true && $("#Result").val() == "2")) {
+            layer.alert("您输入的测量值在合格范围内，请选择结果为合格，或者修改测量值在不合格范围内");
+            return false;
+        }
+
+        var Hlist = $("#htable").find("input");
+        var Harray = new Object();
+        Hlist.each(function () {
+            var name = $(this).attr("field");
+            Harray[name] = $(this).val();
+            if (Harray[name] == "") {
+                tips = $($(this).parent("td").prev("td")).html() + "不能为空！";
+                IsExist = true;
+                return false;
+            }
+        });
+
+        Harray["DonateID"] = $("#H_DonateID").val();
+        Harray["Result"] = $("#SmallValue").val();
+        Harray["UserID"] = $("#H_Operator").val();
+        Harray["IfPass"] = $("#Result").val();
+        Harray["FID"] = $("#FID").val();
+        Harray["Stimess"] = $("#Stimess").val();
+        var json = JSON.stringify(Harray);
+        if ($("#H_Operator").val() == "") { errmsg("操作人不能为空！"); } else {
+            $.post("/BloodTest/SPEResultSave", {
+                json: json
+            }, function (data) {
+                var result = eval('(' + data + ')');
+                if (result.Status == "1") {
+                    successmsg(result.Sign);
+                    $("#subject").hide();
+                    $("#SearchPanel").show();
+                    $("#DonorID").val("");
+                    $("#DonorID").focus();
+                    $("#SmallValue").val("");
+                    $('#tt').datagrid('reload');
+                } else {
+                    errmsg(result.Sign);
+                }
+
+            })
+        }
+        //
+    }
+
+    $(document).ready(function () {
+        $('input').bind('keydown', function (event) {
+            var obj = this;
+            if (event.keyCode == "13") {
+                if ($(this).attr("id") == "SmallValue") {
+                    SPESave();
+                    return false;
+                }
+                var inptList = $("#htable").find("[type='text']");
+                inptList.each(function (i) {
+                    if (inptList[i] == obj) {
+                        var cs = $(inptList[i + 1]).attr("class");
+                        var reg = RegExp(/easyui-datebox/);
+                        if (typeof (cs) == 'undefined') {
+                            $(inptList[i + 1]).focus();
+                            return false;
+                        }
+                        if (cs.match(reg))
+                            $(inptList[i + 2]).focus();
+                        else
+                            $(inptList[i + 1]).focus();
+                        return false;
+                    }
+
+                })
+            }
+        });
+    });
+
+    function LoadInfo(row) {
+        $("#DonorID").val(row["DonorIDL"]);
+        $("#H_DonateID").val(row["DonateID"]);
+        getDonor();
+    }
+
+
+    $(function () {
+        $('#tt').datagrid({
+            url: "/Config/GetDonorList",
+            //title: "待检测名单",
+            queryParams: { type: "12" },
+            onClickCell: function (index, field, value) {
+                var rows = $('#tt').datagrid('getRows');
+                LoadInfo(rows[index]);
+
+            },
+            rownumbers: false,
+            pagination: false,
+            columns: [[
+              { field: 'RowNumber', title: '序号', width: 40 },
+                { field: 'SortID', title: '登记号', width: 60 },
+                { field: 'DonorID', title: '档案编号', width: 70 },
+                { field: 'DonorName', title: '姓名', width: 60 },
+                { field: 'Date', title: '日期', width: 85, formatter: formatYMD }
+            ]],
+            onLoadSuccess: function (data) {
+                var count = $('#tt').datagrid('getRows').length;
+                count = count > 0 ? count : 0;
+                //$('#tt').datagrid("getPanel").panel("setTitle", "待检测名单 合计" + count + "条记录")
+                $("#tt_Title").html("待检测名单 (" + count + "条记录)");
+            },
+        });
+    })
+
+    $(document).ready(function () {
+        //$("#sltDate").val("2019-06-11");
+        //$('#sltDate').datebox('setValue', '2019-06-11');
+        $('#sltDate').datebox({
+            onSelect: function (date) {
+                $('#tt').datagrid("reload", {
+                    type: 12,
+                    sltDate: $("#sltDate").val()
+                });
+            }
+        });
+    });
+
+    function functry() {
+        var a = $("#UserAccountID_Sign").val();
+        alert(a);
+    }
+
+</script>
