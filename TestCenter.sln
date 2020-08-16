@@ -57,8 +57,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YiSha.Admin.Web", "YiSha.Ad
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestCenter.CodeGenerator", "TestCenter.CodeGenerator\TestCenter.CodeGenerator.csproj", "{854FFD26-A6CA-43AD-AFDC-E07074721D5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDemo", "TestDemo\TestDemo.csproj", "{AA0FEECB-EB3B-4346-B0B5-BA4646180A66}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,10 +147,6 @@ Global
 		{854FFD26-A6CA-43AD-AFDC-E07074721D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{854FFD26-A6CA-43AD-AFDC-E07074721D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{854FFD26-A6CA-43AD-AFDC-E07074721D5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA0FEECB-EB3B-4346-B0B5-BA4646180A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA0FEECB-EB3B-4346-B0B5-BA4646180A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA0FEECB-EB3B-4346-B0B5-BA4646180A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA0FEECB-EB3B-4346-B0B5-BA4646180A66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -180,7 +174,6 @@ Global
 		{1259758D-FA87-4CE0-98C6-7556344114DE} = {0CE9818A-4304-41E6-9D34-2945A7359846}
 		{C65986F7-A844-4A5F-8C4A-F62A290BF5F3} = {FA8DA35F-B719-4C5D-9C8D-6183A5E4C8FD}
 		{854FFD26-A6CA-43AD-AFDC-E07074721D5B} = {0CE9818A-4304-41E6-9D34-2945A7359846}
-		{AA0FEECB-EB3B-4346-B0B5-BA4646180A66} = {FA8DA35F-B719-4C5D-9C8D-6183A5E4C8FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6D24145-8211-4630-A5E6-7FF31FABFC5C}
